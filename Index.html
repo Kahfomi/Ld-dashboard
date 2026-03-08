@@ -1,0 +1,4217 @@
+<!DOCTYPE html>
+
+<html lang="de">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <meta name="apple-mobile-web-app-title" content="L&D Cockpit"/>
+  <meta name="theme-color" content="#0c1128"/>
+  <title>L&D Cockpit – zipmend Academy</title>
+  <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #0c1128; font-family: sans-serif; -webkit-text-size-adjust: 100%; }
+    #root { min-height: 100vh; }
+    input[type=date]::-webkit-calendar-picker-indicator { filter: invert(1); opacity: 0.6; }
+    select option { background: #1a2248; color: white; }
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: rgba(255,255,255,0.03); }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 99px; }
+    a { color: #60a5fa; }
+    button, input, select { -webkit-appearance: none; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script>
+    // localStorage-based storage shim
+    window.storage = {
+      get: function(key) {
+        try { var v=localStorage.getItem('ld_'+key); return Promise.resolve(v?{key:key,value:v}:null); }
+        catch(e){ return Promise.resolve(null); }
+      },
+      set: function(key,value) {
+        try { localStorage.setItem('ld_'+key,value); return Promise.resolve({key:key,value:value}); }
+        catch(e){ return Promise.resolve(null); }
+      },
+      delete: function(key) {
+        try { localStorage.removeItem('ld_'+key); return Promise.resolve({key:key,deleted:true}); }
+        catch(e){ return Promise.resolve(null); }
+      }
+    };
+
+```
+var useState    = React.useState;
+var useEffect   = React.useEffect;
+var useCallback = React.useCallback;
+var useRef      = React.useRef;
+```
+
+  </script>
+  <script>
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = App;
+
+function _regenerator() { /*! regenerator-runtime – Copyright (c) 2014-present, Facebook, Inc. – license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = “function” == typeof Symbol ? Symbol : {}, n = r.iterator || “@@iterator”, o = r.toStringTag || “@@toStringTag”; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, “_invoke”, function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError(“Generator is already running”); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = “next”), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError(“iterator result is not an object”); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i[“return”]) && t.call(i), c < 2 && (u = TypeError(“The iterator does not provide a ‘” + o + “’ method”), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.**proto** = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, “GeneratorFunction”)), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, “constructor”, GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, “constructor”, GeneratorFunction), GeneratorFunction.displayName = “GeneratorFunction”, _regeneratorDefine2(GeneratorFunctionPrototype, o, “GeneratorFunction”), _regeneratorDefine2(u), _regeneratorDefine2(u, o, “Generator”), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, “toString”, function () { return “[object Generator]”; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
+function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, “”, {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o(“next”, 0), o(“throw”, 1), o(“return”, 2)); }, _regeneratorDefine2(e, r, n, t); }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, “next”, n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, “throw”, n); } _next(void 0); }); }; }
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError(“Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.”); }
+function _iterableToArray(r) { if (“undefined” != typeof Symbol && null != r[Symbol.iterator] || null != r[”@@iterator”]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, “string”); return “symbol” == _typeof(i) ? i : i + “”; }
+function _toPrimitive(t, r) { if (“object” != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || “default”); if (“object” != _typeof(i)) return i; throw new TypeError(”@@toPrimitive must return a primitive value.”); } return (“string” === r ? String : Number)(t); }
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError(“Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.”); }
+function _unsupportedIterableToArray(r, a) { if (r) { if (“string” == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return “Object” === t && r.constructor && (t = r.constructor.name), “Map” === t || “Set” === t ? Array.from(r) : “Arguments” === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : “undefined” != typeof Symbol && r[Symbol.iterator] || r[”@@iterator”]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t[“return”] && (u = t[“return”](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+var C = {
+red: “#E8002D”,
+navy: “#12183B”,
+navyL: “#1a2248”,
+navyD: “#0c1128”,
+navyLL: “#1f2a56”,
+white: “#ffffff”,
+gray: “#7a85a3”,
+grayD: “#4a5578”
+};
+var STATUS = {
+“Offen”: {
+color: “#7a85a3”,
+bg: “rgba(122,133,163,0.13)”,
+icon: “○”
+},
+“Aktiv”: {
+color: C.red,
+bg: “rgba(232,0,45,0.12)”,
+icon: “◉”
+},
+“Wartend”: {
+color: “#f59e0b”,
+bg: “rgba(245,158,11,0.12)”,
+icon: “◷”
+},
+“Erledigt”: {
+color: “#22c55e”,
+bg: “rgba(34,197,94,0.12)”,
+icon: “◎”
+}
+};
+var STATUS_KEYS = Object.keys(STATUS);
+var CATS = [“Strategie”, “Leadership”, “Training”, “Compliance”, “Infrastruktur”, “Sonstiges”];
+var uid = function uid() {
+return Math.random().toString(36).slice(2, 10);
+};
+
+// ─── Date utils ───────────────────────────────────────────────────────────────
+var toISO = function toISO(d) {
+return d instanceof Date ? d.toISOString().slice(0, 10) : d || “”;
+};
+var fromISO = function fromISO(s) {
+return s ? new Date(s + “T00:00:00”) : null;
+};
+var dLeft = function dLeft(d) {
+return d ? Math.ceil((new Date(d) - new Date()) / 86400000) : null;
+};
+var fDate = function fDate(d) {
+return d ? new Date(d + “T00:00:00”).toLocaleDateString(“de-DE”, {
+day: “2-digit”,
+month: “short”
+}) : “–”;
+};
+var dColor = function dColor(days) {
+return days === null ? C.gray : days < 0 ? C.red : days <= 14 ? C.red : days <= 30 ? “#f59e0b” : “#22c55e”;
+};
+var addDays = function addDays(iso, n) {
+var d = new Date(iso + “T00:00:00”);
+d.setDate(d.getDate() + n);
+return toISO(d);
+};
+
+// ─── Seed ─────────────────────────────────────────────────────────────────────
+var SEED = [{
+id: “pg1”,
+title: “Leadership Development”,
+status: “Aktiv”,
+start: “2026-03-01”,
+deadline: “2026-09-01”,
+description: “Entwicklung aller Führungskräfte bei zipmend”,
+projekte: [{
+id: “pj1”,
+title: “Gesprächsführung”,
+status: “Aktiv”,
+category: “Leadership”,
+start: “2026-03-01”,
+deadline: “2026-05-15”,
+description: “Strukturierte Gespräche führen”,
+bausteine: [{
+id: “b1”,
+title: “1:1 Gespräche”,
+status: “Aktiv”,
+start: “2026-03-01”,
+deadline: “2026-04-01”,
+description: “Modul Einzelgespräche”,
+aufgaben: [{
+id: “t1”,
+title: “Leitfaden entwickeln”,
+status: “Erledigt”,
+deadline: “”
+}, {
+id: “t2”,
+title: “Gesprächsstruktur definieren”,
+status: “Erledigt”,
+deadline: “”
+}, {
+id: “t3”,
+title: “Pilotworkshop”,
+status: “Aktiv”,
+deadline: “2026-04-01”
+}]
+}, {
+id: “b2”,
+title: “Bonusgespräche”,
+status: “Offen”,
+start: “2026-04-01”,
+deadline: “2026-05-15”,
+description: “Leistungsbezogene Gespräche”,
+aufgaben: [{
+id: “t4”,
+title: “Vorlage erstellen”,
+status: “Offen”,
+deadline: “”
+}, {
+id: “t5”,
+title: “Schulungsunterlagen”,
+status: “Offen”,
+deadline: “”
+}]
+}]
+}, {
+id: “pj2”,
+title: “Feedback-Kultur”,
+status: “Wartend”,
+category: “Leadership”,
+start: “2026-05-01”,
+deadline: “2026-07-30”,
+description: “Feedback als Führungsinstrument”,
+bausteine: [{
+id: “b3”,
+title: “Feedback-Grundlagen”,
+status: “Offen”,
+start: “2026-05-01”,
+deadline: “2026-06-15”,
+description: “Theoretischer Rahmen”,
+aufgaben: [{
+id: “t6”,
+title: “Workshop-Design”,
+status: “Offen”,
+deadline: “”
+}]
+}]
+}]
+}, {
+id: “pg2”,
+title: “Onboarding 2.0”,
+status: “Aktiv”,
+start: “2026-02-15”,
+deadline: “2026-04-30”,
+description: “Überarbeitung des Onboarding-Flows”,
+projekte: [{
+id: “pj3”,
+title: “Fahrer-Onboarding”,
+status: “Aktiv”,
+category: “Training”,
+start: “2026-02-15”,
+deadline: “2026-04-01”,
+description: “Praktisches Onboarding”,
+bausteine: [{
+id: “b4”,
+title: “ADR Gefahrgut”,
+status: “Aktiv”,
+start: “2026-02-15”,
+deadline: “2026-03-25”,
+description: “Pflichtschulung ADR”,
+aufgaben: [{
+id: “t7”,
+title: “Handbuch aktualisieren”,
+status: “Erledigt”,
+deadline: “”
+}, {
+id: “t8”,
+title: “Punkte-Kalkulator”,
+status: “Erledigt”,
+deadline: “”
+}, {
+id: “t9”,
+title: “E-Learning Modul”,
+status: “Aktiv”,
+deadline: “2026-03-25”
+}]
+}]
+}]
+}];
+
+// ─── Progress calc ────────────────────────────────────────────────────────────
+var calcT = function calcT() {
+var a = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+return !a.length ? 0 : Math.round(a.filter(function (x) {
+return x.status === “Erledigt”;
+}).length / a.length * 100);
+};
+var calcB = function calcB(b) {
+return calcT(b.aufgaben);
+};
+var calcPj = function calcPj(pj) {
+var _pj$bausteine;
+return !((_pj$bausteine = pj.bausteine) !== null && _pj$bausteine !== void 0 && _pj$bausteine.length) ? 0 : Math.round(pj.bausteine.reduce(function (s, b) {
+return s + calcB(b);
+}, 0) / pj.bausteine.length);
+};
+var calcPg = function calcPg(pg) {
+var _pg$projekte;
+return !((_pg$projekte = pg.projekte) !== null && _pg$projekte !== void 0 && _pg$projekte.length) ? 0 : Math.round(pg.projekte.reduce(function (s, p) {
+return s + calcPj(p);
+}, 0) / pg.projekte.length);
+};
+
+// ─── Atoms ────────────────────────────────────────────────────────────────────
+function Ring(_ref) {
+var pct = _ref.pct,
+_ref$size = _ref.size,
+size = _ref$size === void 0 ? 48 : _ref$size,
+_ref$stroke = _ref.stroke,
+stroke = _ref$stroke === void 0 ? 4 : _ref$stroke,
+_ref$color = _ref.color,
+color = _ref$color === void 0 ? C.red : _ref$color;
+var r = (size - stroke) / 2,
+ci = 2 * Math.PI * r;
+return /*#**PURE***/React.createElement(“svg”, {
+width: size,
+height: size,
+style: {
+transform: “rotate(-90deg)”,
+flexShrink: 0
+}
+}, /*#**PURE***/React.createElement(“circle”, {
+cx: size / 2,
+cy: size / 2,
+r: r,
+fill: “none”,
+stroke: “rgba(255,255,255,0.07)”,
+strokeWidth: stroke
+}), /*#**PURE***/React.createElement(“circle”, {
+cx: size / 2,
+cy: size / 2,
+r: r,
+fill: “none”,
+stroke: color,
+strokeWidth: stroke,
+strokeDasharray: ci,
+strokeDashoffset: ci - pct / 100 * ci,
+strokeLinecap: “round”,
+style: {
+transition: “stroke-dashoffset 0.5s”
+}
+}));
+}
+function PctRing(_ref2) {
+var pct = _ref2.pct,
+_ref2$size = _ref2.size,
+size = _ref2$size === void 0 ? 48 : _ref2$size,
+_ref2$color = _ref2.color,
+color = _ref2$color === void 0 ? C.red : _ref2$color;
+return /*#**PURE***/React.createElement(“div”, {
+style: {
+position: “relative”,
+flexShrink: 0
+}
+}, /*#**PURE***/React.createElement(Ring, {
+pct: pct,
+size: size,
+stroke: size > 50 ? 5 : 4,
+color: color
+}), /*#**PURE***/React.createElement(“div”, {
+style: {
+position: “absolute”,
+inset: 0,
+display: “flex”,
+alignItems: “center”,
+justifyContent: “center”,
+fontSize: size > 50 ? 13 : 10,
+fontWeight: 800,
+color: C.white
+}
+}, pct, “%”));
+}
+function Badge(_ref3) {
+var status = _ref3.status;
+var s = STATUS[status] || STATUS[“Offen”];
+return /*#**PURE***/React.createElement(“span”, {
+style: {
+fontSize: 11,
+fontWeight: 700,
+padding: “3px 10px”,
+borderRadius: 20,
+background: s.bg,
+color: s.color,
+whiteSpace: “nowrap”
+}
+}, s.icon, “ “, status);
+}
+function Bar(_ref4) {
+var pct = _ref4.pct,
+_ref4$color = _ref4.color,
+color = _ref4$color === void 0 ? C.red : _ref4$color,
+_ref4$h = _ref4.h,
+h = _ref4$h === void 0 ? 5 : _ref4$h;
+return /*#**PURE***/React.createElement(“div”, {
+style: {
+background: “rgba(255,255,255,0.07)”,
+borderRadius: 99,
+height: h,
+overflow: “hidden”
+}
+}, /*#**PURE***/React.createElement(“div”, {
+style: {
+width: “”.concat(pct, “%”),
+height: “100%”,
+background: color,
+borderRadius: 99,
+transition: “width 0.5s”
+}
+}));
+}
+function Crumb(_ref5) {
+var items = _ref5.items;
+return /*#**PURE***/React.createElement(“div”, {
+style: {
+display: “flex”,
+alignItems: “center”,
+gap: 4,
+marginBottom: 24,
+flexWrap: “wrap”
+}
+}, items.map(function (item, i) {
+var isLast = i === items.length - 1;
+var hasAction = item.onEdit || item.onClick;
+return /*#**PURE***/React.createElement(“span”, {
+key: i,
+style: {
+display: “flex”,
+alignItems: “center”,
+gap: 4
+}
+}, i > 0 && /*#**PURE***/React.createElement(“span”, {
+style: {
+color: C.grayD,
+fontSize: 13
+}
+}, “\u203A”), /*#**PURE***/React.createElement(“button”, {
+onClick: item.onEdit || item.onClick || undefined,
+disabled: !hasAction,
+style: {
+background: “none”,
+border: “none”,
+color: isLast ? C.white : C.gray,
+fontSize: 13,
+fontWeight: isLast ? 700 : 500,
+cursor: hasAction ? “pointer” : “default”,
+padding: “4px 0”,
+fontFamily: “‘DM Sans’,sans-serif”,
+display: “flex”,
+alignItems: “center”,
+gap: 4
+}
+}, item.label, item.onEdit && /*#**PURE***/React.createElement(“span”, {
+style: {
+fontSize: 9,
+color: C.grayD,
+opacity: 0.7
+}
+}, “\u270E”)));
+}));
+}
+function EmptyCard(_ref6) {
+var label = _ref6.label,
+sub = _ref6.sub;
+return /*#**PURE***/React.createElement(“div”, {
+style: {
+textAlign: “center”,
+padding: “48px 20px”,
+background: C.navyL,
+borderRadius: 16,
+border: “1px dashed rgba(255,255,255,0.1)”
+}
+}, /*#**PURE***/React.createElement(“div”, {
+style: {
+fontSize: 28,
+marginBottom: 10
+}
+}, “\uD83D\uDCCB”), /*#**PURE***/React.createElement(“div”, {
+style: {
+color: C.white,
+fontWeight: 700,
+fontSize: 15,
+marginBottom: 4
+}
+}, label), /*#**PURE***/React.createElement(“div”, {
+style: {
+color: C.gray,
+fontSize: 13
+}
+}, sub));
+}
+var addBtnStyle = function addBtnStyle() {
+return {
+background: C.red,
+color: C.white,
+border: “none”,
+borderRadius: 10,
+padding: “9px 16px”,
+fontWeight: 700,
+fontSize: 13,
+cursor: “pointer”,
+boxShadow: “0 2px 14px rgba(232,0,45,0.28)”,
+fontFamily: “‘DM Sans’,sans-serif”
+};
+};
+
+// ─── Modal ────────────────────────────────────────────────────────────────────
+function Modal(_ref7) {
+var title = _ref7.title,
+fields = _ref7.fields,
+initial = _ref7.initial,
+onSave = _ref7.onSave,
+onDelete = _ref7.onDelete,
+onClose = _ref7.onClose;
+var _useState = (0, React.useState)(_objectSpread({}, initial)),
+_useState2 = _slicedToArray(_useState, 2),
+form = _useState2[0],
+setForm = _useState2[1];
+var set = function set(k, v) {
+return setForm(function (f) {
+return _objectSpread(_objectSpread({}, f), {}, _defineProperty({}, k, v));
+});
+};
+var iStyle = {
+width: “100%”,
+background: “rgba(255,255,255,0.05)”,
+border: “1px solid rgba(255,255,255,0.1)”,
+borderRadius: 10,
+padding: “10px 13px”,
+color: C.white,
+fontSize: 14,
+outline: “none”,
+boxSizing: “border-box”,
+fontFamily: “‘DM Sans’,sans-serif”
+};
+var lStyle = {
+color: C.gray,
+fontSize: 10,
+fontWeight: 700,
+letterSpacing: 1,
+textTransform: “uppercase”,
+display: “block”,
+marginBottom: 5
+};
+return /*#**PURE***/React.createElement(“div”, {
+style: {
+position: “fixed”,
+inset: 0,
+background: “rgba(6,8,20,0.9)”,
+display: “flex”,
+alignItems: “center”,
+justifyContent: “center”,
+zIndex: 1000,
+backdropFilter: “blur(6px)”,
+padding: 16
+},
+onClick: function onClick(e) {
+return e.target === e.currentTarget && onClose();
+}
+}, /*#**PURE***/React.createElement(“div”, {
+style: {
+background: C.navyL,
+borderRadius: 20,
+padding: 26,
+width: “100%”,
+maxWidth: 460,
+border: “1px solid rgba(255,255,255,0.09)”,
+boxShadow: “0 40px 100px rgba(0,0,0,0.6)”,
+maxHeight: “90vh”,
+overflowY: “auto”
+}
+}, /*#**PURE***/React.createElement(“div”, {
+style: {
+display: “flex”,
+justifyContent: “space-between”,
+alignItems: “center”,
+marginBottom: 20
+}
+}, /*#**PURE***/React.createElement(“h3”, {
+style: {
+color: C.white,
+margin: 0,
+fontSize: 17,
+fontWeight: 800,
+fontFamily: “‘Syne’,sans-serif”
+}
+}, title), /*#**PURE***/React.createElement(“button”, {
+onClick: onClose,
+style: {
+background: “none”,
+border: “none”,
+color: C.gray,
+fontSize: 20,
+cursor: “pointer”
+}
+}, “\u2715”)), /*#**PURE***/React.createElement(“div”, {
+style: {
+display: “flex”,
+flexDirection: “column”,
+gap: 13
+}
+}, fields.map(function (f) {
+if (f.type === “select”) return /*#**PURE***/React.createElement(“div”, {
+key: f.key
+}, /*#**PURE***/React.createElement(“label”, {
+style: lStyle
+}, f.label), /*#**PURE***/React.createElement(“select”, {
+value: form[f.key] || “”,
+onChange: function onChange(e) {
+return set(f.key, e.target.value);
+},
+style: _objectSpread(_objectSpread({}, iStyle), {}, {
+background: “#1a2248”
+})
+}, f.options.map(function (o) {
+return /*#**PURE***/React.createElement(“option”, {
+key: o,
+value: o
+}, o);
+})));
+if (f.type === “date”) return /*#**PURE***/React.createElement(“div”, {
+key: f.key
+}, /*#**PURE***/React.createElement(“label”, {
+style: lStyle
+}, f.label), /*#**PURE***/React.createElement(“input”, {
+type: “date”,
+value: form[f.key] || “”,
+onChange: function onChange(e) {
+return set(f.key, e.target.value);
+},
+style: _objectSpread(_objectSpread({}, iStyle), {}, {
+background: “#1a2248”
+})
+}));
+return /*#**PURE***/React.createElement(“div”, {
+key: f.key
+}, /*#**PURE***/React.createElement(“label”, {
+style: lStyle
+}, f.label), /*#**PURE***/React.createElement(“input”, {
+type: “text”,
+value: form[f.key] || “”,
+onChange: function onChange(e) {
+return set(f.key, e.target.value);
+},
+style: iStyle,
+placeholder: f.placeholder || “”
+}));
+})), /*#**PURE***/React.createElement(“div”, {
+style: {
+display: “flex”,
+gap: 10,
+marginTop: 20
+}
+}, /*#**PURE***/React.createElement(“button”, {
+onClick: function onClick() {
+return onSave(form);
+},
+style: {
+flex: 1,
+background: C.red,
+color: C.white,
+border: “none”,
+borderRadius: 10,
+padding: “11px”,
+fontWeight: 700,
+fontSize: 14,
+cursor: “pointer”,
+fontFamily: “‘DM Sans’,sans-serif”
+}
+}, “Speichern”), onDelete && /*#**PURE***/React.createElement(“button”, {
+onClick: onDelete,
+style: {
+background: “rgba(232,0,45,0.1)”,
+color: C.red,
+border: “1px solid rgba(232,0,45,0.2)”,
+borderRadius: 10,
+padding: “11px 14px”,
+fontWeight: 700,
+fontSize: 14,
+cursor: “pointer”
+}
+}, “\uD83D\uDDD1”), /*#**PURE***/React.createElement(“button”, {
+onClick: onClose,
+style: {
+background: “rgba(255,255,255,0.06)”,
+color: C.gray,
+border: “1px solid rgba(255,255,255,0.09)”,
+borderRadius: 10,
+padding: “11px 14px”,
+fontWeight: 600,
+fontSize: 14,
+cursor: “pointer”
+}
+}, “\u2715”))));
+}
+
+// ─── GANTT ────────────────────────────────────────────────────────────────────
+var GANTT_LABEL_W = 160;
+var ROW_H = 36;
+function GanttBar(_ref8) {
+var row = _ref8.row,
+timelineStart = _ref8.timelineStart,
+totalDays = _ref8.totalDays,
+containerWidth = _ref8.containerWidth,
+onUpdate = _ref8.onUpdate,
+isMobile = _ref8.isMobile;
+var barAreaW = containerWidth - GANTT_LABEL_W - 60;
+var sc = STATUS[row.status] || STATUS[“Offen”];
+var dragging = (0, React.useRef)(null);
+var _useState3 = (0, React.useState)(row),
+_useState4 = _slicedToArray(_useState3, 2),
+localRow = _useState4[0],
+setLocalRow = _useState4[1];
+(0, React.useEffect)(function () {
+return setLocalRow(row);
+}, [row]);
+var toPx = function toPx(iso) {
+return iso ? Math.max(0, Math.min(barAreaW, (new Date(iso + “T00:00:00”) - timelineStart) / 86400000 / totalDays * barAreaW)) : 0;
+};
+var toISO2 = function toISO2(px) {
+var d = new Date(timelineStart);
+d.setDate(d.getDate() + Math.round(px / barAreaW * totalDays));
+return toISO(d);
+};
+var startPx = toPx(localRow.start || localRow.deadline);
+var endPx = toPx(localRow.deadline);
+var barW = Math.max(endPx - startPx, 8);
+var pct = row.level === “Baustein” ? calcB(row._raw) : row.level === “Projekt” ? calcPj(row._raw) : calcPg(row._raw);
+var isOverdue = localRow.deadline && new Date(localRow.deadline) < new Date();
+var barColor = isOverdue ? “#7a1020” : sc.color;
+
+// Drag handlers (desktop)
+var onMouseDownMove = function onMouseDownMove(e) {
+if (isMobile) return;
+e.preventDefault();
+var startX = e.clientX;
+var origStart = localRow.start;
+var origEnd = localRow.deadline;
+dragging.current = “move”;
+var onMove = function onMove(ev) {
+var dx = ev.clientX - startX;
+var days = Math.round(dx / barAreaW * totalDays);
+if (origStart) setLocalRow(function (r) {
+return _objectSpread(_objectSpread({}, r), {}, {
+start: addDays(origStart, days),
+deadline: addDays(origEnd, days)
+});
+});else setLocalRow(function (r) {
+return _objectSpread(_objectSpread({}, r), {}, {
+deadline: addDays(origEnd, days)
+});
+});
+};
+var _onUp = function onUp(ev) {
+var dx = ev.clientX - startX;
+var days = Math.round(dx / barAreaW * totalDays);
+var updated = _objectSpread({}, localRow);
+if (origStart) {
+updated.start = addDays(origStart, days);
+updated.deadline = addDays(origEnd, days);
+} else {
+updated.deadline = addDays(origEnd, days);
+}
+setLocalRow(updated);
+onUpdate(updated);
+dragging.current = null;
+window.removeEventListener(“mousemove”, onMove);
+window.removeEventListener(“mouseup”, _onUp);
+};
+window.addEventListener(“mousemove”, onMove);
+window.addEventListener(“mouseup”, _onUp);
+};
+var onMouseDownResize = function onMouseDownResize(e) {
+if (isMobile) return;
+e.preventDefault();
+e.stopPropagation();
+var startX = e.clientX;
+var origEnd = localRow.deadline;
+dragging.current = “resize”;
+var onMove = function onMove(ev) {
+var dx = ev.clientX - startX;
+var days = Math.round(dx / barAreaW * totalDays);
+var newEnd = addDays(origEnd, days);
+if (newEnd >= (localRow.start || origEnd)) setLocalRow(function (r) {
+return _objectSpread(_objectSpread({}, r), {}, {
+deadline: newEnd
+});
+});
+};
+var _onUp2 = function onUp(ev) {
+var dx = ev.clientX - startX;
+var days = Math.round(dx / barAreaW * totalDays);
+var newEnd = addDays(origEnd, days);
+var updated = _objectSpread(_objectSpread({}, localRow), {}, {
+deadline: newEnd >= (localRow.start || origEnd) ? newEnd : origEnd
+});
+setLocalRow(updated);
+onUpdate(updated);
+dragging.current = null;
+window.removeEventListener(“mousemove”, onMove);
+window.removeEventListener(“mouseup”, _onUp2);
+};
+window.addEventListener(“mousemove”, onMove);
+window.addEventListener(“mouseup”, _onUp2);
+};
+var barH = row.level === “Programm” ? 12 : row.level === “Projekt” ? 9 : 7;
+var indent = row.level === “Programm” ? 0 : row.level === “Projekt” ? 10 : 20;
+return /*#**PURE***/React.createElement(“div”, {
+style: {
+display: “flex”,
+alignItems: “center”,
+height: ROW_H,
+borderBottom: “1px solid rgba(255,255,255,0.03)”
+}
+}, /*#**PURE***/React.createElement(“div”, {
+onClick: function onClick() {
+return onUpdate(_objectSpread(_objectSpread({}, localRow), {}, {
+_tapEdit: true
+}));
+},
+style: {
+width: GANTT_LABEL_W,
+flexShrink: 0,
+paddingRight: 8,
+paddingLeft: 4 + indent,
+display: “flex”,
+alignItems: “center”,
+gap: 6,
+cursor: “pointer”,
+borderRadius: 6,
+transition: “background 0.15s”
+},
+onMouseEnter: function onMouseEnter(e) {
+return e.currentTarget.style.background = “rgba(255,255,255,0.05)”;
+},
+onMouseLeave: function onMouseLeave(e) {
+return e.currentTarget.style.background = “transparent”;
+}
+}, /*#**PURE***/React.createElement(“div”, {
+style: {
+width: 6,
+height: 6,
+borderRadius: “50%”,
+background: sc.color,
+flexShrink: 0
+}
+}), /*#**PURE***/React.createElement(“span”, {
+style: {
+fontSize: row.level === “Programm” ? 12 : 11,
+fontWeight: row.level === “Programm” ? 700 : 500,
+color: row.level === “Programm” ? C.white : C.gray,
+overflow: “hidden”,
+textOverflow: “ellipsis”,
+whiteSpace: “nowrap”,
+flex: 1
+}
+}, row.label), /*#**PURE***/React.createElement(“span”, {
+style: {
+fontSize: 9,
+color: C.grayD,
+flexShrink: 0,
+opacity: 0.6
+}
+}, “\u270E”)), /*#**PURE***/React.createElement(“div”, {
+style: {
+flex: 1,
+position: “relative”,
+height: “100%”,
+cursor: isMobile ? “pointer” : “default”
+},
+onClick: isMobile ? function () {
+return onUpdate(_objectSpread(_objectSpread({}, localRow), {}, {
+_tapEdit: true
+}));
+} : undefined
+}, localRow.deadline && /*#**PURE***/React.createElement(React.Fragment, null, /*#**PURE***/React.createElement(“div”, {
+onMouseDown: onMouseDownMove,
+style: {
+position: “absolute”,
+left: startPx,
+width: barW,
+height: barH,
+top: “50%”,
+transform: “translateY(-50%)”,
+background: barColor,
+borderRadius: 99,
+cursor: isMobile ? “pointer” : “grab”,
+overflow: “hidden”,
+boxShadow: row.level === “Programm” ? “0 0 8px “.concat(barColor, “50”) : “none”,
+userSelect: “none”
+}
+}, /*#**PURE***/React.createElement(“div”, {
+style: {
+width: “”.concat(pct, “%”),
+height: “100%”,
+background: “rgba(255,255,255,0.3)”,
+borderRadius: 99
+}
+})), !isMobile && /*#**PURE***/React.createElement(“div”, {
+onMouseDown: onMouseDownResize,
+style: {
+position: “absolute”,
+left: startPx + barW - 4,
+width: 8,
+height: barH + 4,
+top: “50%”,
+transform: “translateY(-50%)”,
+cursor: “ew-resize”,
+background: “rgba(255,255,255,0.15)”,
+borderRadius: “0 4px 4px 0”,
+zIndex: 2
+}
+}), /*#**PURE***/React.createElement(“div”, {
+style: {
+position: “absolute”,
+left: endPx - 4,
+top: “50%”,
+transform: “translateY(-50%)”,
+width: 8,
+height: 8,
+borderRadius: “50%”,
+background: barColor,
+border: “2px solid rgba(255,255,255,0.3)”,
+zIndex: 3
+}
+}))), /*#**PURE***/React.createElement(“div”, {
+style: {
+width: 52,
+textAlign: “right”,
+fontSize: 10,
+color: dColor(dLeft(localRow.deadline)),
+fontWeight: 600,
+flexShrink: 0,
+paddingLeft: 4
+}
+}, localRow.deadline ? fDate(localRow.deadline) : “”));
+}
+function GanttView(_ref9) {
+var programme = _ref9.programme,
+onDataChange = _ref9.onDataChange,
+isMobile = _ref9.isMobile;
+var _useState5 = (0, React.useState)({}),
+_useState6 = _slicedToArray(_useState5, 2),
+collapsed = _useState6[0],
+setCollapsed = _useState6[1];
+var _useState7 = (0, React.useState)(“Alle”),
+_useState8 = _slicedToArray(_useState7, 2),
+filterLevel = _useState8[0],
+setFilterLevel = _useState8[1];
+var _useState9 = (0, React.useState)(“Alle”),
+_useState0 = _slicedToArray(_useState9, 2),
+filterStatus = _useState0[0],
+setFilterStatus = _useState0[1];
+var _useState1 = (0, React.useState)(null),
+_useState10 = _slicedToArray(_useState1, 2),
+addModal = _useState10[0],
+setAddModal = _useState10[1];
+var _useState11 = (0, React.useState)(null),
+_useState12 = _slicedToArray(_useState11, 2),
+editModal = _useState12[0],
+setEditModal = _useState12[1];
+var containerRef = (0, React.useRef)(null);
+var _useState13 = (0, React.useState)(700),
+_useState14 = _slicedToArray(_useState13, 2),
+containerW = _useState14[0],
+setContainerW = _useState14[1];
+(0, React.useEffect)(function () {
+var obs = new ResizeObserver(function (entries) {
+if (entries[0]) setContainerW(entries[0].contentRect.width);
+});
+if (containerRef.current) obs.observe(containerRef.current);
+return function () {
+return obs.disconnect();
+};
+}, []);
+var today = new Date();
+today.setHours(0, 0, 0, 0);
+var winStart = new Date(today);
+winStart.setDate(winStart.getDate() - 14);
+var winEnd = new Date(today);
+winEnd.setMonth(winEnd.getMonth() + 6);
+var totalDays = (winEnd - winStart) / 86400000;
+var barAreaW = containerW - GANTT_LABEL_W - 60;
+var todayPx = (today - winStart) / 86400000 / totalDays * barAreaW;
+
+// Month ticks
+var months = [];
+var mc = new Date(winStart);
+mc.setDate(1);
+while (mc <= winEnd) {
+var px = (mc - winStart) / 86400000 / totalDays * barAreaW;
+if (px >= 0) months.push({
+label: mc.toLocaleDateString(“de-DE”, {
+month: “short”,
+year: “2-digit”
+}),
+px: px
+});
+mc.setMonth(mc.getMonth() + 1);
+}
+
+// Build rows per program group
+var groups = programme.map(function (pg) {
+var pgPct = calcPg(pg);
+var rows = [];
+if (filterLevel === “Alle” || filterLevel === “Projekt” || filterLevel === “Baustein”) {
+(pg.projekte || []).forEach(function (pj) {
+if ((filterStatus === “Alle” || pj.status === filterStatus) && (filterLevel === “Alle” || filterLevel === “Projekt” || filterLevel === “Baustein”)) {
+if (filterLevel !== “Baustein”) rows.push({
+id: pj.id,
+label: pj.title,
+level: “Projekt”,
+status: pj.status,
+start: pj.start,
+deadline: pj.deadline,
+_pgId: pg.id,
+_pjId: pj.id,
+_raw: pj
+});
+if (filterLevel === “Alle” || filterLevel === “Baustein”) {
+(pj.bausteine || []).forEach(function (bs) {
+if (filterStatus === “Alle” || bs.status === filterStatus) rows.push({
+id: bs.id,
+label: bs.title,
+level: “Baustein”,
+status: bs.status,
+start: bs.start,
+deadline: bs.deadline,
+_pgId: pg.id,
+_pjId: pj.id,
+_bsId: bs.id,
+_raw: bs
+});
+});
+}
+}
+});
+}
+return {
+pg: pg,
+pgPct: pgPct,
+rows: rows,
+show: filterStatus === “Alle” || pg.status === filterStatus || rows.length > 0
+};
+}).filter(function (g) {
+return g.show;
+});
+var handleUpdate = function handleUpdate(updatedRow) {
+if (updatedRow._tapEdit) {
+var _updatedRow$_raw, _updatedRow$label;
+setEditModal(_objectSpread(_objectSpread({}, updatedRow), {}, {
+title: ((_updatedRow$_raw = updatedRow._raw) === null || _updatedRow$_raw === void 0 ? void 0 : _updatedRow$_raw.title) || updatedRow.title || ((_updatedRow$label = updatedRow.label) === null || _updatedRow$label === void 0 ? void 0 : _updatedRow$label.replace(/↳\s*/, “”).trim()) || “”
+}));
+return;
+}
+var d = programme.map(function (pg) {
+if (pg.id !== updatedRow._pgId) return pg;
+return _objectSpread(_objectSpread({}, pg), {}, {
+projekte: (pg.projekte || []).map(function (pj) {
+if (updatedRow.level === “Projekt” && pj.id === updatedRow._pjId) return _objectSpread(_objectSpread({}, pj), {}, {
+start: updatedRow.start,
+deadline: updatedRow.deadline
+});
+if (updatedRow.level === “Baustein” && pj.id === updatedRow._pjId) return _objectSpread(_objectSpread({}, pj), {}, {
+bausteine: (pj.bausteine || []).map(function (bs) {
+return bs.id === updatedRow._bsId ? _objectSpread(_objectSpread({}, bs), {}, {
+start: updatedRow.start,
+deadline: updatedRow.deadline
+}) : bs;
+})
+});
+return pj;
+})
+});
+});
+onDataChange(d);
+};
+var handleStatusChange = function handleStatusChange(row, newStatus) {
+var d = programme.map(function (pg) {
+if (pg.id !== row._pgId) return pg;
+return _objectSpread(_objectSpread({}, pg), {}, {
+projekte: (pg.projekte || []).map(function (pj) {
+if (row.level === “Projekt” && pj.id === row._pjId) return _objectSpread(_objectSpread({}, pj), {}, {
+status: newStatus
+});
+if (row.level === “Baustein” && pj.id === row._pjId) return _objectSpread(_objectSpread({}, pj), {}, {
+bausteine: (pj.bausteine || []).map(function (bs) {
+return bs.id === row._bsId ? _objectSpread(_objectSpread({}, bs), {}, {
+status: newStatus
+}) : bs;
+})
+});
+return pj;
+})
+});
+});
+onDataChange(d);
+};
+var saveEditModal = function saveEditModal(form) {
+var row = editModal;
+var d = programme.map(function (pg) {
+if (pg.id !== row._pgId) return pg;
+return _objectSpread(_objectSpread({}, pg), {}, {
+projekte: (pg.projekte || []).map(function (pj) {
+if (row.level === “Projekt” && pj.id === row._pjId) return _objectSpread(_objectSpread({}, pj), form);
+if (row.level === “Baustein” && pj.id === row._pjId) return _objectSpread(_objectSpread({}, pj), {}, {
+bausteine: (pj.bausteine || []).map(function (bs) {
+return bs.id === row._bsId ? _objectSpread(_objectSpread({}, bs), form) : bs;
+})
+});
+return pj;
+})
+});
+});
+onDataChange(d);
+setEditModal(null);
+};
+var saveAdd = function saveAdd(form) {
+var _pgId = addModal._pgId,
+_type = addModal._type;
+var d = programme.map(function (pg) {
+if (pg.id !== _pgId) return pg;
+if (_type === “Projekt”) return _objectSpread(_objectSpread({}, pg), {}, {
+projekte: [].concat(_toConsumableArray(pg.projekte || []), [_objectSpread(_objectSpread({}, form), {}, {
+id: uid(),
+bausteine: []
+})])
+});
+if (_type === “Baustein”) {
+return _objectSpread(_objectSpread({}, pg), {}, {
+projekte: (pg.projekte || []).map(function (pj) {
+if (pj.id !== addModal._pjId) return pj;
+return _objectSpread(_objectSpread({}, pj), {}, {
+bausteine: [].concat(_toConsumableArray(pj.bausteine || []), [_objectSpread(_objectSpread({}, form), {}, {
+id: uid(),
+aufgaben: []
+})])
+});
+})
+});
+}
+return pg;
+});
+onDataChange(d);
+setAddModal(null);
+};
+return /*#**PURE***/React.createElement(“div”, null, /*#**PURE***/React.createElement(“div”, {
+style: {
+display: “flex”,
+gap: 8,
+marginBottom: 16,
+flexWrap: “wrap”,
+alignItems: “center”
+}
+}, /*#**PURE***/React.createElement(“div”, {
+style: {
+display: “flex”,
+gap: 6,
+flexWrap: “wrap”
+}
+}, [“Alle”, “Projekt”, “Baustein”].map(function (l) {
+return /*#**PURE***/React.createElement(“button”, {
+key: l,
+onClick: function onClick() {
+return setFilterLevel(l);
+},
+style: {
+padding: “6px 13px”,
+borderRadius: 20,
+fontSize: 12,
+fontWeight: 600,
+cursor: “pointer”,
+border: “none”,
+background: filterLevel === l ? C.red : “rgba(255,255,255,0.07)”,
+color: filterLevel === l ? C.white : C.gray
+}
+}, l);
+})), /*#**PURE***/React.createElement(“div”, {
+style: {
+width: 1,
+height: 20,
+background: “rgba(255,255,255,0.1)”
+}
+}), /*#**PURE***/React.createElement(“div”, {
+style: {
+display: “flex”,
+gap: 6,
+flexWrap: “wrap”
+}
+}, [“Alle”].concat(STATUS_KEYS).map(function (s) {
+var _STATUS$s;
+return /*#**PURE***/React.createElement(“button”, {
+key: s,
+onClick: function onClick() {
+return setFilterStatus(s);
+},
+style: {
+padding: “6px 13px”,
+borderRadius: 20,
+fontSize: 12,
+fontWeight: 600,
+cursor: “pointer”,
+border: “none”,
+background: filterStatus === s ? ((_STATUS$s = STATUS[s]) === null || _STATUS$s === void 0 ? void 0 : _STATUS$s.color) || C.red : “rgba(255,255,255,0.07)”,
+color: filterStatus === s ? C.white : C.gray,
+opacity: filterStatus === s ? 1 : 0.8
+}
+}, s === “Alle” ? “Alle Status” : s);
+}))), /*#**PURE***/React.createElement(“div”, {
+ref: containerRef,
+style: {
+background: C.navyL,
+borderRadius: 18,
+padding: “18px 16px”,
+border: “1px solid rgba(255,255,255,0.07)”,
+overflowX: “auto”
+}
+}, /*#**PURE***/React.createElement(“div”, {
+style: {
+display: “flex”,
+marginBottom: 8,
+marginLeft: GANTT_LABEL_W
+}
+}, /*#**PURE***/React.createElement(“div”, {
+style: {
+position: “relative”,
+width: barAreaW,
+height: 18,
+flexShrink: 0
+}
+}, months.map(function (m, i) {
+return /*#**PURE***/React.createElement(“div”, {
+key: i,
+style: {
+position: “absolute”,
+left: m.px,
+fontSize: 10,
+color: C.gray,
+fontWeight: 600,
+whiteSpace: “nowrap”,
+letterSpacing: 0.5
+}
+}, m.label);
+}))), groups.map(function (_ref0) {
+var pg = _ref0.pg,
+pgPct = _ref0.pgPct,
+rows = _ref0.rows;
+var sc = STATUS[pg.status] || STATUS[“Offen”];
+var isCollapsed = collapsed[pg.id];
+return /*#**PURE***/React.createElement(“div”, {
+key: pg.id,
+style: {
+marginBottom: 4
+}
+}, /*#**PURE***/React.createElement(“div”, {
+style: {
+display: “flex”,
+alignItems: “center”,
+height: ROW_H,
+background: “rgba(255,255,255,0.04)”,
+borderRadius: 8,
+marginBottom: 2
+}
+}, /*#**PURE***/React.createElement(“div”, {
+style: {
+width: GANTT_LABEL_W,
+flexShrink: 0,
+paddingLeft: 4,
+display: “flex”,
+alignItems: “center”,
+gap: 6
+}
+}, /*#**PURE***/React.createElement(“button”, {
+onClick: function onClick() {
+return setCollapsed(function (c) {
+return _objectSpread(_objectSpread({}, c), {}, _defineProperty({}, pg.id, !c[pg.id]));
+});
+},
+style: {
+background: “none”,
+border: “none”,
+color: C.gray,
+cursor: “pointer”,
+fontSize: 12,
+padding: “2px 4px”,
+lineHeight: 1
+}
+}, isCollapsed ? “▶” : “▼”), /*#**PURE***/React.createElement(“span”, {
+style: {
+fontSize: 12,
+fontWeight: 800,
+color: C.white,
+overflow: “hidden”,
+textOverflow: “ellipsis”,
+whiteSpace: “nowrap”,
+flex: 1,
+fontFamily: “‘Syne’,sans-serif”
+}
+}, pg.title)), /*#**PURE***/React.createElement(“div”, {
+style: {
+flex: 1,
+position: “relative”,
+height: “100%”,
+display: “flex”,
+alignItems: “center”
+}
+}, months.map(function (m, i) {
+return /*#**PURE***/React.createElement(“div”, {
+key: i,
+style: {
+position: “absolute”,
+left: m.px,
+top: 0,
+bottom: 0,
+width: 1,
+background: “rgba(255,255,255,0.04)”
+}
+});
+}), /*#**PURE***/React.createElement(“div”, {
+style: {
+position: “absolute”,
+left: todayPx,
+top: 0,
+bottom: 0,
+width: 1.5,
+background: “”.concat(C.red, “60”)
+}
+}), pg.start && pg.deadline && function () {
+var sp = Math.max(0, (new Date(pg.start + “T00:00:00”) - winStart) / 86400000 / totalDays * barAreaW);
+var ep = Math.min(barAreaW, (new Date(pg.deadline + “T00:00:00”) - winStart) / 86400000 / totalDays * barAreaW);
+var bw = Math.max(ep - sp, 8);
+return /*#**PURE***/React.createElement(“div”, {
+style: {
+position: “absolute”,
+left: sp,
+width: bw,
+height: 13,
+background: sc.color,
+borderRadius: 99,
+opacity: 0.9,
+overflow: “hidden”,
+boxShadow: “0 0 10px “.concat(sc.color, “40”)
+}
+}, /*#**PURE***/React.createElement(“div”, {
+style: {
+width: “”.concat(pgPct, “%”),
+height: “100%”,
+background: “rgba(255,255,255,0.3)”,
+borderRadius: 99
+}
+}));
+}()), /*#**PURE***/React.createElement(“div”, {
+style: {
+width: 52,
+textAlign: “right”,
+fontSize: 10,
+color: dColor(dLeft(pg.deadline)),
+fontWeight: 600,
+flexShrink: 0,
+paddingLeft: 4
+}
+}, fDate(pg.deadline))), !isCollapsed && /*#**PURE***/React.createElement(“div”, null, rows.map(function (row) {
+return /*#**PURE***/React.createElement(“div”, {
+key: row.id,
+style: {
+display: “flex”,
+alignItems: “center”
+}
+}, /*#**PURE***/React.createElement(GanttBar, {
+key: row.id,
+row: row,
+timelineStart: winStart,
+totalDays: totalDays,
+containerWidth: containerW,
+onUpdate: handleUpdate,
+isMobile: isMobile
+}));
+}), !isMobile && /*#**PURE***/React.createElement(“div”, {
+style: {
+display: “flex”,
+gap: 8,
+padding: “4px 0 4px 24px”
+}
+}, /*#**PURE***/React.createElement(“button”, {
+onClick: function onClick() {
+return setAddModal({
+_pgId: pg.id,
+_type: “Projekt”,
+status: “Offen”,
+category: “Training”,
+title: “”,
+start: “”,
+deadline: “”
+});
+},
+style: {
+fontSize: 11,
+color: C.gray,
+background: “none”,
+border: “1px dashed rgba(255,255,255,0.15)”,
+borderRadius: 8,
+padding: “3px 10px”,
+cursor: “pointer”
+}
+}, “+ Projekt”), (pg.projekte || []).length > 0 && /*#**PURE***/React.createElement(“button”, {
+onClick: function onClick() {
+return setAddModal({
+_pgId: pg.id,
+_pjId: pg.projekte[0].id,
+_type: “Baustein”,
+status: “Offen”,
+title: “”,
+start: “”,
+deadline: “”
+});
+},
+style: {
+fontSize: 11,
+color: C.gray,
+background: “none”,
+border: “1px dashed rgba(255,255,255,0.15)”,
+borderRadius: 8,
+padding: “3px 10px”,
+cursor: “pointer”
+}
+}, “+ Baustein in “, pg.projekte[0].title))));
+}), groups.length === 0 && /*#**PURE***/React.createElement(“div”, {
+style: {
+textAlign: “center”,
+padding: “30px”,
+color: C.gray,
+fontSize: 13
+}
+}, “Keine Eintr\xE4ge f\xFCr diesen Filter.”), /*#**PURE***/React.createElement(“div”, {
+style: {
+marginTop: 8,
+paddingTop: 10,
+borderTop: “1px solid rgba(255,255,255,0.05)”,
+display: “flex”,
+alignItems: “center”,
+gap: 8
+}
+}, /*#**PURE***/React.createElement(“div”, {
+style: {
+width: GANTT_LABEL_W,
+flexShrink: 0
+}
+}), /*#**PURE***/React.createElement(“div”, {
+style: {
+flex: 1,
+position: “relative”
+}
+}, /*#**PURE***/React.createElement(“div”, {
+style: {
+position: “absolute”,
+left: todayPx - 12,
+fontSize: 10,
+color: C.red,
+fontWeight: 700,
+whiteSpace: “nowrap”
+}
+}, “\u25B2 Heute”)))), isMobile && /*#**PURE***/React.createElement(“p”, {
+style: {
+color: C.gray,
+fontSize: 12,
+textAlign: “center”,
+marginTop: 8
+}
+}, “Balken antippen zum Bearbeiten von Datum & Status”), !isMobile && /*#**PURE***/React.createElement(“p”, {
+style: {
+color: C.gray,
+fontSize: 11,
+textAlign: “center”,
+marginTop: 8
+}
+}, “Balken ziehen = verschieben \xB7 Rechte Kante ziehen = verl\xE4ngern”), editModal && /*#**PURE***/React.createElement(Modal, {
+title: “Eintrag bearbeiten”,
+fields: [{
+key: “title”,
+label: “Titel”,
+type: “text”
+}, {
+key: “status”,
+label: “Status”,
+type: “select”,
+options: STATUS_KEYS
+}, {
+key: “start”,
+label: “Start”,
+type: “date”
+}, {
+key: “deadline”,
+label: “Deadline”,
+type: “date”
+}],
+initial: editModal,
+onSave: saveEditModal,
+onDelete: null,
+onClose: function onClose() {
+return setEditModal(null);
+}
+}), addModal && /*#**PURE***/React.createElement(Modal, {
+title: “Neues “.concat(addModal._type),
+fields: [{
+key: “title”,
+label: “Titel”,
+type: “text”,
+placeholder: “z.B. Neues “.concat(addModal._type)
+}].concat(_toConsumableArray(addModal._type === “Projekt” ? [{
+key: “category”,
+label: “Kategorie”,
+type: “select”,
+options: CATS
+}] : []), [{
+key: “status”,
+label: “Status”,
+type: “select”,
+options: STATUS_KEYS
+}, {
+key: “start”,
+label: “Start”,
+type: “date”
+}, {
+key: “deadline”,
+label: “Deadline”,
+type: “date”
+}, {
+key: “description”,
+label: “Beschreibung”,
+type: “text”
+}]),
+initial: addModal,
+onSave: saveAdd,
+onDelete: null,
+onClose: function onClose() {
+return setAddModal(null);
+}
+}));
+}
+
+// ─── WEEKLY VIEW ──────────────────────────────────────────────────────────────
+function WeeklyView(_ref1) {
+var programme = _ref1.programme,
+onDataChange = _ref1.onDataChange;
+var today = new Date();
+today.setHours(0, 0, 0, 0);
+var weekStart = new Date(today);
+weekStart.setDate(weekStart.getDate() - (weekStart.getDay() + 6) % 7);
+var weeks = [0, 1, 2, 3].map(function (w) {
+var s = new Date(weekStart);
+s.setDate(s.getDate() + w * 7);
+var e = new Date(s);
+e.setDate(e.getDate() + 6);
+return {
+start: s,
+end: e,
+items: []
+};
+});
+programme.forEach(function (pg) {
+(pg.projekte || []).forEach(function (pj) {
+(pj.bausteine || []).forEach(function (bs) {
+(bs.aufgaben || []).forEach(function (t) {
+if (!t.deadline || t.status === “Erledigt”) return;
+var d = new Date(t.deadline + “T00:00:00”);
+weeks.forEach(function (w) {
+if (d >= w.start && d <= w.end) w.items.push(_objectSpread(_objectSpread({}, t), {}, {
+_pgId: pg.id,
+_pjId: pj.id,
+_bsId: bs.id,
+_pgTitle: pg.title,
+_pjTitle: pj.title,
+_bsTitle: bs.title,
+_type: “aufgabe”
+}));
+});
+});
+if (bs.deadline && bs.status !== “Erledigt”) {
+var d = new Date(bs.deadline + “T00:00:00”);
+weeks.forEach(function (w) {
+if (d >= w.start && d <= w.end) w.items.push({
+id: bs.id,
+title: “\uD83D\uDCE6 “.concat(bs.title),
+status: bs.status,
+deadline: bs.deadline,
+_pgId: pg.id,
+_pjId: pj.id,
+_bsId: bs.id,
+_pgTitle: pg.title,
+_pjTitle: pj.title,
+_bsTitle: “”,
+_type: “baustein”
+});
+});
+}
+});
+if (pj.deadline && pj.status !== “Erledigt”) {
+var d = new Date(pj.deadline + “T00:00:00”);
+weeks.forEach(function (w) {
+if (d >= w.start && d <= w.end) w.items.push({
+id: pj.id,
+title: “\uD83C\uDFAF “.concat(pj.title),
+status: pj.status,
+deadline: pj.deadline,
+_pgId: pg.id,
+_pjId: pj.id,
+_pgTitle: pg.title,
+_pjTitle: “”,
+_bsTitle: “”,
+_type: “projekt”
+});
+});
+}
+});
+});
+var toggleTask = function toggleTask(item) {
+if (item._type !== “aufgabe”) return;
+var newStatus = item.status === “Erledigt” ? “Offen” : “Erledigt”;
+var d = programme.map(function (pg) {
+if (pg.id !== item._pgId) return pg;
+return _objectSpread(_objectSpread({}, pg), {}, {
+projekte: (pg.projekte || []).map(function (pj) {
+if (pj.id !== item._pjId) return pj;
+return _objectSpread(_objectSpread({}, pj), {}, {
+bausteine: (pj.bausteine || []).map(function (bs) {
+if (bs.id !== item._bsId) return bs;
+return _objectSpread(_objectSpread({}, bs), {}, {
+aufgaben: (bs.aufgaben || []).map(function (t) {
+return t.id === item.id ? _objectSpread(_objectSpread({}, t), {}, {
+status: newStatus
+}) : t;
+})
+});
+})
+});
+})
+});
+});
+onDataChange(d);
+};
+return /*#**PURE***/React.createElement(“div”, null, /*#**PURE***/React.createElement(“h3”, {
+style: {
+color: C.white,
+fontFamily: “‘Syne’,sans-serif”,
+fontWeight: 800,
+fontSize: 15,
+margin: “0 0 14px”
+}
+}, “Wochenplanung”), /*#**PURE***/React.createElement(“div”, {
+style: {
+display: “grid”,
+gridTemplateColumns: “repeat(auto-fill,minmax(240px,1fr))”,
+gap: 12
+}
+}, weeks.map(function (w, i) {
+var isCurrent = i === 0;
+var weekLabel = i === 0 ? “Diese Woche” : i === 1 ? “Nächste Woche” : “”.concat(w.start.toLocaleDateString(“de-DE”, {
+day: “2-digit”,
+month: “short”
+}), “ \u2013 “).concat(w.end.toLocaleDateString(“de-DE”, {
+day: “2-digit”,
+month: “short”
+}));
+return /*#**PURE***/React.createElement(“div”, {
+key: i,
+style: {
+background: isCurrent ? “linear-gradient(135deg,”.concat(C.navyLL, “,”).concat(C.navyL, “)”) : C.navyL,
+borderRadius: 16,
+padding: “16px”,
+border: “1px solid “.concat(isCurrent ? “rgba(232,0,45,0.2)” : “rgba(255,255,255,0.07)”),
+position: “relative”,
+overflow: “hidden”
+}
+}, isCurrent && /*#**PURE***/React.createElement(“div”, {
+style: {
+position: “absolute”,
+top: 0,
+left: 0,
+right: 0,
+height: 2,
+background: C.red
+}
+}), /*#**PURE***/React.createElement(“div”, {
+style: {
+marginBottom: 12
+}
+}, /*#**PURE***/React.createElement(“div”, {
+style: {
+fontSize: 10,
+color: isCurrent ? C.red : C.gray,
+fontWeight: 700,
+letterSpacing: 1,
+textTransform: “uppercase”,
+marginBottom: 3
+}
+}, isCurrent ? “● “ : “”, weekLabel), w.items.length > 0 && /*#**PURE***/React.createElement(“span”, {
+style: {
+fontSize: 11,
+color: isCurrent ? C.red : C.gray,
+fontWeight: 700
+}
+}, w.items.length, “ Eintr\xE4ge”)), w.items.length === 0 ? /*#**PURE***/React.createElement(“div”, {
+style: {
+color: C.gray,
+fontSize: 12,
+padding: “12px 0”,
+textAlign: “center”,
+opacity: 0.5
+}
+}, “Nichts f\xE4llig \uD83C\uDF89”) : /*#**PURE***/React.createElement(“div”, {
+style: {
+display: “flex”,
+flexDirection: “column”,
+gap: 6
+}
+}, w.items.map(function (it, j) {
+var sc = STATUS[it.status] || STATUS[“Offen”];
+var itDays = dLeft(it.deadline);
+var overdue = itDays !== null && itDays < 0;
+var isTask = it.*type === “aufgabe”;
+return /*#**PURE***/React.createElement(“div”, {
+key: it.id + “*” + j,
+onClick: isTask ? function () {
+return toggleTask(it);
+} : undefined,
+style: {
+background: “rgba(0,0,0,0.2)”,
+borderRadius: 10,
+padding: “9px 11px”,
+borderLeft: “3px solid “.concat(overdue ? C.red : sc.color),
+cursor: isTask ? “pointer” : “default”,
+transition: “opacity 0.15s”,
+opacity: it.status === “Erledigt” ? 0.5 : 1
+}
+}, /*#**PURE***/React.createElement(“div”, {
+style: {
+fontSize: 12,
+color: overdue ? “#ff6b6b” : C.white,
+fontWeight: 600,
+marginBottom: 2,
+textDecoration: it.status === “Erledigt” ? “line-through” : “none”
+}
+}, isTask && /*#**PURE***/React.createElement(“span”, {
+style: {
+marginRight: 6
+}
+}, it.status === “Erledigt” ? “☑” : “☐”), it.title), /*#**PURE***/React.createElement(“div”, {
+style: {
+fontSize: 10,
+color: C.gray
+}
+}, [it._pgTitle, it._pjTitle, it._bsTitle].filter(Boolean).join(” › “)), /*#**PURE***/React.createElement(“div”, {
+style: {
+display: “flex”,
+justifyContent: “space-between”,
+alignItems: “center”,
+marginTop: 5
+}
+}, /*#**PURE***/React.createElement(“span”, {
+style: {
+fontSize: 10,
+color: sc.color,
+fontWeight: 700,
+background: sc.bg,
+padding: “2px 7px”,
+borderRadius: 20
+}
+}, sc.icon, “ “, it.status), /*#**PURE***/React.createElement(“span”, {
+style: {
+fontSize: 10,
+color: dColor(itDays),
+fontWeight: 700
+}
+}, fDate(it.deadline), overdue ? “ ⚠” : “”)));
+})));
+})));
+}
+
+// ─── HIERARCHY (full, condensed) ──────────────────────────────────────────────
+function LevelHeader(_ref10) {
+var item = _ref10.item,
+pct = _ref10.pct,
+sub = _ref10.sub,
+onEdit = _ref10.onEdit,
+color = _ref10.color;
+var days = dLeft(item.deadline);
+var sc = STATUS[item.status] || STATUS[“Offen”];
+return /*#**PURE***/React.createElement(“div”, {
+style: {
+background: “linear-gradient(135deg,”.concat(C.navyL, “,”).concat(C.navy, “)”),
+borderRadius: 20,
+padding: “22px 26px”,
+marginBottom: 26,
+border: “1px solid rgba(255,255,255,0.08)”,
+position: “relative”,
+overflow: “hidden”
+}
+}, /*#**PURE***/React.createElement(“div”, {
+style: {
+position: “absolute”,
+left: 0,
+top: 0,
+bottom: 0,
+width: 4,
+background: color || sc.color,
+borderRadius: “20px 0 0 20px”
+}
+}), /*#**PURE***/React.createElement(“div”, {
+style: {
+paddingLeft: 16
+}
+}, /*#**PURE***/React.createElement(“div”, {
+style: {
+display: “flex”,
+justifyContent: “space-between”,
+alignItems: “flex-start”,
+gap: 16,
+flexWrap: “wrap”
+}
+}, /*#**PURE***/React.createElement(“div”, {
+style: {
+flex: 1
+}
+}, /*#**PURE***/React.createElement(“div”, {
+style: {
+display: “flex”,
+gap: 8,
+marginBottom: 10,
+flexWrap: “wrap”,
+alignItems: “center”
+}
+}, /*#**PURE***/React.createElement(Badge, {
+status: item.status
+}), days !== null && /*#**PURE***/React.createElement(“span”, {
+style: {
+fontSize: 11,
+color: dColor(days),
+fontWeight: 700,
+background: “”.concat(dColor(days), “18”),
+padding: “3px 10px”,
+borderRadius: 20
+}
+}, days < 0 ? “”.concat(Math.abs(days), “d \xFCberf\xE4llig”) : “noch “.concat(days, “d”))), /*#**PURE***/React.createElement(“h2”, {
+style: {
+color: C.white,
+fontSize: 22,
+fontWeight: 800,
+margin: “0 0 5px”,
+fontFamily: “‘Syne’,sans-serif”
+}
+}, item.title), item.description && /*#**PURE***/React.createElement(“p”, {
+style: {
+color: C.gray,
+fontSize: 13,
+margin: “0 0 14px”
+}
+}, item.description), /*#**PURE***/React.createElement(Bar, {
+pct: pct,
+color: color || sc.color,
+h: 6
+}), /*#**PURE***/React.createElement(“div”, {
+style: {
+fontSize: 12,
+color: C.gray,
+marginTop: 6
+}
+}, pct, “% \xB7 “, sub)), /*#**PURE***/React.createElement(“div”, {
+style: {
+display: “flex”,
+flexDirection: “column”,
+alignItems: “center”,
+gap: 8
+}
+}, /*#**PURE***/React.createElement(PctRing, {
+pct: pct,
+size: 64,
+color: color || sc.color
+}), /*#**PURE***/React.createElement(“button”, {
+onClick: onEdit,
+style: {
+background: “rgba(255,255,255,0.07)”,
+color: C.gray,
+border: “1px solid rgba(255,255,255,0.09)”,
+borderRadius: 8,
+padding: “5px 12px”,
+fontSize: 12,
+cursor: “pointer”
+}
+}, “\u270E Edit”)))));
+}
+function AufgabenView(_ref11) {
+var _bs$aufgaben, _bs$aufgaben2, _bs$aufgaben3, _bs$aufgaben4;
+var pg = _ref11.pg,
+pj = _ref11.pj,
+bs = _ref11.bs,
+onChange = _ref11.onChange,
+onBack = _ref11.onBack;
+var _useState15 = (0, React.useState)(null),
+_useState16 = _slicedToArray(_useState15, 2),
+modal = _useState16[0],
+setModal = _useState16[1];
+var save = function save(form) {
+var list = form.id ? bs.aufgaben.map(function (a) {
+return a.id === form.id ? form : a;
+}) : [].concat(_toConsumableArray(bs.aufgaben || []), [_objectSpread(_objectSpread({}, form), {}, {
+id: uid()
+})]);
+onChange(_objectSpread(_objectSpread({}, bs), {}, {
+aufgaben: list
+}));
+setModal(null);
+};
+var del = function del(id) {
+onChange(_objectSpread(_objectSpread({}, bs), {}, {
+aufgaben: bs.aufgaben.filter(function (a) {
+return a.id !== id;
+})
+}));
+setModal(null);
+};
+var cycle = function cycle(a) {
+var n = {
+“Offen”: “Aktiv”,
+“Aktiv”: “Erledigt”,
+“Erledigt”: “Offen”,
+“Wartend”: “Aktiv”
+};
+save(_objectSpread(_objectSpread({}, a), {}, {
+status: n[a.status] || “Aktiv”
+}));
+};
+var pct = calcB(bs);
+var sc = STATUS[bs.status] || STATUS[“Offen”];
+return /*#**PURE***/React.createElement(“div”, null, /*#**PURE***/React.createElement(Crumb, {
+items: [{
+label: “Programme”,
+onClick: function onClick() {
+return onBack(“root”);
+}
+}, {
+label: pg.title,
+onClick: function onClick() {
+return onBack(“pg”);
+},
+onEdit: function onEdit() {
+return setModal(_objectSpread(_objectSpread({}, pg), {}, {
+_h: true
+}));
+}
+}, {
+label: pj.title,
+onClick: function onClick() {
+return onBack(“pj”);
+},
+onEdit: function onEdit() {
+return setModal(_objectSpread(_objectSpread({}, pj), {}, {
+_h: true
+}));
+}
+}, {
+label: bs.title,
+onClick: null,
+onEdit: function onEdit() {
+return setModal(_objectSpread(_objectSpread({}, bs), {}, {
+_h: true
+}));
+}
+}]
+}), /*#**PURE***/React.createElement(LevelHeader, {
+item: bs,
+pct: pct,
+color: sc.color,
+sub: “”.concat(((_bs$aufgaben = bs.aufgaben) === null || _bs$aufgaben === void 0 ? void 0 : _bs$aufgaben.filter(function (a) {
+return a.status === “Erledigt”;
+}).length) || 0, “/”).concat(((_bs$aufgaben2 = bs.aufgaben) === null || _bs$aufgaben2 === void 0 ? void 0 : _bs$aufgaben2.length) || 0, “ Aufgaben”),
+onEdit: function onEdit() {
+return setModal(_objectSpread(_objectSpread({}, bs), {}, {
+_h: true
+}));
+}
+}), /*#**PURE***/React.createElement(“div”, {
+style: {
+display: “flex”,
+justifyContent: “space-between”,
+alignItems: “center”,
+marginBottom: 14
+}
+}, /*#**PURE***/React.createElement(“h3”, {
+style: {
+color: C.white,
+margin: 0,
+fontSize: 15,
+fontWeight: 700,
+fontFamily: “‘Syne’,sans-serif”
+}
+}, “Aufgaben “, /*#**PURE***/React.createElement(“span”, {
+style: {
+color: C.gray,
+fontWeight: 400
+}
+}, “(”, ((_bs$aufgaben3 = bs.aufgaben) === null || _bs$aufgaben3 === void 0 ? void 0 : _bs$aufgaben3.length) || 0, “)”)), /*#**PURE***/React.createElement(“button”, {
+onClick: function onClick() {
+return setModal({
+status: “Offen”,
+title: “”,
+deadline: “”
+});
+},
+style: addBtnStyle()
+}, “+ Aufgabe”)), /*#**PURE***/React.createElement(“div”, {
+style: {
+display: “flex”,
+flexDirection: “column”,
+gap: 8
+}
+}, (bs.aufgaben || []).map(function (a) {
+var as = STATUS[a.status] || STATUS[“Offen”];
+var ad = dLeft(a.deadline);
+return /*#**PURE***/React.createElement(“div”, {
+key: a.id,
+onClick: function onClick() {
+return setModal(_objectSpread({}, a));
+},
+style: {
+background: C.navyL,
+borderRadius: 13,
+padding: “13px 16px”,
+border: “1px solid rgba(255,255,255,0.06)”,
+cursor: “pointer”,
+display: “flex”,
+alignItems: “center”,
+gap: 12,
+transition: “background 0.15s”
+},
+onMouseEnter: function onMouseEnter(e) {
+return e.currentTarget.style.background = C.navyLL;
+},
+onMouseLeave: function onMouseLeave(e) {
+return e.currentTarget.style.background = C.navyL;
+}
+}, /*#**PURE***/React.createElement(“button”, {
+onClick: function onClick(e) {
+e.stopPropagation();
+cycle(a);
+},
+style: {
+background: as.bg,
+border: “none”,
+borderRadius: “50%”,
+width: 30,
+height: 30,
+fontSize: 14,
+cursor: “pointer”,
+color: as.color,
+flexShrink: 0,
+display: “flex”,
+alignItems: “center”,
+justifyContent: “center”
+}
+}, as.icon), /*#**PURE***/React.createElement(“div”, {
+style: {
+flex: 1,
+minWidth: 0
+}
+}, /*#**PURE***/React.createElement(“div”, {
+style: {
+color: a.status === “Erledigt” ? C.gray : C.white,
+fontSize: 14,
+fontWeight: 600,
+textDecoration: a.status === “Erledigt” ? “line-through” : “none”,
+overflow: “hidden”,
+textOverflow: “ellipsis”,
+whiteSpace: “nowrap”
+}
+}, a.title), a.deadline && /*#**PURE***/React.createElement(“div”, {
+style: {
+fontSize: 11,
+color: dColor(ad),
+marginTop: 2
+}
+}, “\uD83D\uDCC5 “, fDate(a.deadline)), a.notes && /*#**PURE***/React.createElement(“div”, {
+style: {
+fontSize: 11,
+color: C.gray,
+marginTop: 2,
+fontStyle: “italic”
+}
+}, “\uD83D\uDCDD “, a.notes)), /*#**PURE***/React.createElement(Badge, {
+status: a.status
+}));
+}), !((_bs$aufgaben4 = bs.aufgaben) !== null && _bs$aufgaben4 !== void 0 && _bs$aufgaben4.length) && /*#**PURE***/React.createElement(EmptyCard, {
+label: “Noch keine Aufgaben”,
+sub: “Erste Aufgabe hinzuf\xFCgen”
+})), modal && !modal._h && /*#**PURE***/React.createElement(Modal, {
+title: modal.id ? “Aufgabe bearbeiten” : “Neue Aufgabe”,
+fields: [{
+key: “title”,
+label: “Aufgabe”,
+type: “text”
+}, {
+key: “status”,
+label: “Status”,
+type: “select”,
+options: STATUS_KEYS
+}, {
+key: “deadline”,
+label: “Deadline”,
+type: “date”
+}],
+initial: modal,
+onSave: save,
+onDelete: modal.id ? function () {
+return del(modal.id);
+} : null,
+onClose: function onClose() {
+return setModal(null);
+}
+}), (modal === null || modal === void 0 ? void 0 : modal._h) && /*#**PURE***/React.createElement(Modal, {
+title: “Baustein bearbeiten”,
+fields: [{
+key: “title”,
+label: “Titel”,
+type: “text”
+}, {
+key: “status”,
+label: “Status”,
+type: “select”,
+options: STATUS_KEYS
+}, {
+key: “start”,
+label: “Start”,
+type: “date”
+}, {
+key: “deadline”,
+label: “Deadline”,
+type: “date”
+}, {
+key: “description”,
+label: “Beschreibung”,
+type: “text”
+}],
+initial: bs,
+onSave: function onSave(f) {
+onChange(_objectSpread(_objectSpread({}, bs), f));
+setModal(null);
+},
+onDelete: null,
+onClose: function onClose() {
+return setModal(null);
+}
+}));
+}
+function BausteineView(_ref12) {
+var _pj$bausteine2, _pj$bausteine3, _pj$bausteine4;
+var pg = _ref12.pg,
+pj = _ref12.pj,
+onSelectBaustein = _ref12.onSelectBaustein,
+onPjChange = _ref12.onPjChange,
+onBack = _ref12.onBack;
+var _useState17 = (0, React.useState)(null),
+_useState18 = _slicedToArray(_useState17, 2),
+modal = _useState18[0],
+setModal = _useState18[1];
+var saveBs = function saveBs(form) {
+var list = form.id ? pj.bausteine.map(function (b) {
+return b.id === form.id ? _objectSpread(_objectSpread({}, b), form) : b;
+}) : [].concat(_toConsumableArray(pj.bausteine || []), [_objectSpread(_objectSpread({}, form), {}, {
+id: uid(),
+aufgaben: []
+})]);
+onPjChange(_objectSpread(_objectSpread({}, pj), {}, {
+bausteine: list
+}));
+setModal(null);
+};
+var delBs = function delBs(id) {
+onPjChange(_objectSpread(_objectSpread({}, pj), {}, {
+bausteine: pj.bausteine.filter(function (b) {
+return b.id !== id;
+})
+}));
+setModal(null);
+};
+var pct = calcPj(pj);
+var sc = STATUS[pj.status] || STATUS[“Offen”];
+return /*#**PURE***/React.createElement(“div”, null, /*#**PURE***/React.createElement(Crumb, {
+items: [{
+label: “Programme”,
+onClick: function onClick() {
+return onBack(“root”);
+}
+}, {
+label: pg.title,
+onClick: function onClick() {
+return onBack(“pg”);
+},
+onEdit: function onEdit() {
+return setModal(_objectSpread(_objectSpread({}, pg), {}, {
+_h: true
+}));
+}
+}, {
+label: pj.title,
+onClick: null,
+onEdit: function onEdit() {
+return setModal(_objectSpread(_objectSpread({}, pj), {}, {
+_h: true
+}));
+}
+}]
+}), /*#**PURE***/React.createElement(LevelHeader, {
+item: pj,
+pct: pct,
+color: sc.color,
+sub: “”.concat(((_pj$bausteine2 = pj.bausteine) === null || _pj$bausteine2 === void 0 ? void 0 : _pj$bausteine2.length) || 0, “ Bausteine \xB7 “).concat(pj.category || “”),
+onEdit: function onEdit() {
+return setModal(_objectSpread(_objectSpread({}, pj), {}, {
+_h: true
+}));
+}
+}), /*#**PURE***/React.createElement(“div”, {
+style: {
+display: “flex”,
+justifyContent: “space-between”,
+alignItems: “center”,
+marginBottom: 14
+}
+}, /*#**PURE***/React.createElement(“h3”, {
+style: {
+color: C.white,
+margin: 0,
+fontSize: 15,
+fontWeight: 700,
+fontFamily: “‘Syne’,sans-serif”
+}
+}, “Bausteine “, /*#**PURE***/React.createElement(“span”, {
+style: {
+color: C.gray,
+fontWeight: 400
+}
+}, “(”, ((_pj$bausteine3 = pj.bausteine) === null || _pj$bausteine3 === void 0 ? void 0 : _pj$bausteine3.length) || 0, “)”)), /*#**PURE***/React.createElement(“button”, {
+onClick: function onClick() {
+return setModal({
+status: “Offen”,
+title: “”,
+start: “”,
+deadline: “”,
+description: “”
+});
+},
+style: addBtnStyle()
+}, “+ Baustein”)), /*#**PURE***/React.createElement(“div”, {
+style: {
+display: “grid”,
+gridTemplateColumns: “repeat(auto-fill,minmax(250px,1fr))”,
+gap: 13
+}
+}, (pj.bausteine || []).map(function (bs) {
+var _bs$aufgaben5, _bs$aufgaben6;
+var bp = calcB(bs);
+var bsc = STATUS[bs.status] || STATUS[“Offen”];
+var days = dLeft(bs.deadline);
+return /*#**PURE***/React.createElement(“div”, {
+key: bs.id,
+style: {
+background: C.navyL,
+borderRadius: 16,
+padding: “18px”,
+border: “1px solid rgba(255,255,255,0.07)”,
+position: “relative”,
+overflow: “hidden”,
+transition: “transform 0.15s,box-shadow 0.15s”
+},
+onMouseEnter: function onMouseEnter(e) {
+e.currentTarget.style.transform = “translateY(-2px)”;
+e.currentTarget.style.boxShadow = “0 10px 30px rgba(0,0,0,0.3)”;
+},
+onMouseLeave: function onMouseLeave(e) {
+e.currentTarget.style.transform = “”;
+e.currentTarget.style.boxShadow = “”;
+}
+}, /*#**PURE***/React.createElement(“div”, {
+style: {
+position: “absolute”,
+top: 0,
+left: 0,
+right: 0,
+height: 3,
+background: bsc.color
+}
+}), /*#**PURE***/React.createElement(“div”, {
+style: {
+display: “flex”,
+justifyContent: “space-between”,
+alignItems: “flex-start”,
+marginBottom: 12
+}
+}, /*#**PURE***/React.createElement(“div”, {
+style: {
+flex: 1,
+paddingRight: 10
+}
+}, /*#**PURE***/React.createElement(“div”, {
+style: {
+marginBottom: 8
+}
+}, /*#**PURE***/React.createElement(Badge, {
+status: bs.status
+})), /*#**PURE***/React.createElement(“div”, {
+onClick: function onClick() {
+return setModal(_objectSpread({}, bs));
+},
+style: {
+color: C.white,
+fontSize: 14,
+fontWeight: 700,
+fontFamily: “‘Syne’,sans-serif”,
+cursor: “pointer”
+}
+}, bs.title)), /*#**PURE***/React.createElement(PctRing, {
+pct: bp,
+size: 44,
+color: bsc.color
+})), /*#**PURE***/React.createElement(Bar, {
+pct: bp,
+color: bsc.color
+}), /*#**PURE***/React.createElement(“div”, {
+style: {
+display: “flex”,
+justifyContent: “space-between”,
+alignItems: “center”,
+marginTop: 10,
+marginBottom: 14
+}
+}, /*#**PURE***/React.createElement(“span”, {
+style: {
+fontSize: 11,
+color: C.gray
+}
+}, “\u2713 “, ((_bs$aufgaben5 = bs.aufgaben) === null || _bs$aufgaben5 === void 0 ? void 0 : _bs$aufgaben5.filter(function (a) {
+return a.status === “Erledigt”;
+}).length) || 0, “/”, ((_bs$aufgaben6 = bs.aufgaben) === null || _bs$aufgaben6 === void 0 ? void 0 : _bs$aufgaben6.length) || 0), /*#**PURE***/React.createElement(“span”, {
+style: {
+fontSize: 11,
+color: dColor(days),
+fontWeight: 600
+}
+}, fDate(bs.deadline))), /*#**PURE***/React.createElement(“div”, {
+style: {
+display: “flex”,
+gap: 8
+}
+}, /*#**PURE***/React.createElement(“button”, {
+onClick: function onClick() {
+return onSelectBaustein(bs);
+},
+style: {
+flex: 1,
+background: “”.concat(C.red, “18”),
+color: C.red,
+border: “1px solid “.concat(C.red, “30”),
+borderRadius: 8,
+padding: “8px”,
+fontWeight: 700,
+fontSize: 12,
+cursor: “pointer”
+}
+}, “Aufgaben \u2192”), /*#**PURE***/React.createElement(“button”, {
+onClick: function onClick() {
+return setModal(_objectSpread({}, bs));
+},
+style: {
+background: “rgba(255,255,255,0.06)”,
+color: C.gray,
+border: “1px solid rgba(255,255,255,0.09)”,
+borderRadius: 8,
+padding: “8px 12px”,
+fontSize: 12,
+cursor: “pointer”
+}
+}, “\u270E”)));
+}), !((_pj$bausteine4 = pj.bausteine) !== null && _pj$bausteine4 !== void 0 && _pj$bausteine4.length) && /*#**PURE***/React.createElement(“div”, {
+style: {
+gridColumn: “1/-1”
+}
+}, /*#**PURE***/React.createElement(EmptyCard, {
+label: “Noch keine Bausteine”,
+sub: “Ersten Baustein hinzuf\xFCgen”
+}))), modal && !modal._h && /*#**PURE***/React.createElement(Modal, {
+title: modal.id ? “Baustein bearbeiten” : “Neuer Baustein”,
+fields: [{
+key: “title”,
+label: “Titel”,
+type: “text”
+}, {
+key: “status”,
+label: “Status”,
+type: “select”,
+options: STATUS_KEYS
+}, {
+key: “start”,
+label: “Start”,
+type: “date”
+}, {
+key: “deadline”,
+label: “Deadline”,
+type: “date”
+}, {
+key: “description”,
+label: “Beschreibung”,
+type: “text”
+}, {
+key: “notes”,
+label: “Notizen”,
+type: “text”,
+placeholder: “Interne Notizen…”
+}, {
+key: “links”,
+label: “Links”,
+type: “text”,
+placeholder: “https://…”
+}],
+initial: modal,
+onSave: saveBs,
+onDelete: modal.id ? function () {
+return delBs(modal.id);
+} : null,
+onClose: function onClose() {
+return setModal(null);
+}
+}), (modal === null || modal === void 0 ? void 0 : modal._h) && /*#**PURE***/React.createElement(Modal, {
+title: “Projekt bearbeiten”,
+fields: [{
+key: “title”,
+label: “Titel”,
+type: “text”
+}, {
+key: “category”,
+label: “Kategorie”,
+type: “select”,
+options: CATS
+}, {
+key: “status”,
+label: “Status”,
+type: “select”,
+options: STATUS_KEYS
+}, {
+key: “start”,
+label: “Start”,
+type: “date”
+}, {
+key: “deadline”,
+label: “Deadline”,
+type: “date”
+}, {
+key: “description”,
+label: “Beschreibung”,
+type: “text”
+}],
+initial: pj,
+onSave: function onSave(f) {
+onPjChange(_objectSpread(_objectSpread({}, pj), f));
+setModal(null);
+},
+onDelete: null,
+onClose: function onClose() {
+return setModal(null);
+}
+}));
+}
+function ProjekteView(_ref13) {
+var _pg$projekte2, _pg$projekte3, _pg$projekte4;
+var pg = _ref13.pg,
+onSelectProjekt = _ref13.onSelectProjekt,
+onPgChange = _ref13.onPgChange,
+onBack = _ref13.onBack;
+var _useState19 = (0, React.useState)(null),
+_useState20 = _slicedToArray(_useState19, 2),
+modal = _useState20[0],
+setModal = _useState20[1];
+var savePj = function savePj(form) {
+var list = form.id ? pg.projekte.map(function (p) {
+return p.id === form.id ? _objectSpread(_objectSpread({}, p), form) : p;
+}) : [].concat(_toConsumableArray(pg.projekte || []), [_objectSpread(_objectSpread({}, form), {}, {
+id: uid(),
+bausteine: []
+})]);
+onPgChange(_objectSpread(_objectSpread({}, pg), {}, {
+projekte: list
+}));
+setModal(null);
+};
+var delPj = function delPj(id) {
+onPgChange(_objectSpread(_objectSpread({}, pg), {}, {
+projekte: pg.projekte.filter(function (p) {
+return p.id !== id;
+})
+}));
+setModal(null);
+};
+var pct = calcPg(pg);
+var sc = STATUS[pg.status] || STATUS[“Offen”];
+return /*#**PURE***/React.createElement(“div”, null, /*#**PURE***/React.createElement(Crumb, {
+items: [{
+label: “Programme”,
+onClick: function onClick() {
+return onBack(“root”);
+}
+}, {
+label: pg.title,
+onClick: null,
+onEdit: function onEdit() {
+return setModal(_objectSpread(_objectSpread({}, pg), {}, {
+_h: true
+}));
+}
+}]
+}), /*#**PURE***/React.createElement(LevelHeader, {
+item: pg,
+pct: pct,
+color: sc.color,
+sub: “”.concat(((_pg$projekte2 = pg.projekte) === null || _pg$projekte2 === void 0 ? void 0 : _pg$projekte2.length) || 0, “ Projekte”),
+onEdit: function onEdit() {
+return setModal(_objectSpread(_objectSpread({}, pg), {}, {
+_h: true
+}));
+}
+}), /*#**PURE***/React.createElement(“div”, {
+style: {
+display: “flex”,
+justifyContent: “space-between”,
+alignItems: “center”,
+marginBottom: 14
+}
+}, /*#**PURE***/React.createElement(“h3”, {
+style: {
+color: C.white,
+margin: 0,
+fontSize: 15,
+fontWeight: 700,
+fontFamily: “‘Syne’,sans-serif”
+}
+}, “Projekte “, /*#**PURE***/React.createElement(“span”, {
+style: {
+color: C.gray,
+fontWeight: 400
+}
+}, “(”, ((_pg$projekte3 = pg.projekte) === null || _pg$projekte3 === void 0 ? void 0 : _pg$projekte3.length) || 0, “)”)), /*#**PURE***/React.createElement(“button”, {
+onClick: function onClick() {
+return setModal({
+status: “Offen”,
+category: “Training”,
+title: “”,
+start: “”,
+deadline: “”,
+description: “”
+});
+},
+style: addBtnStyle()
+}, “+ Projekt”)), /*#**PURE***/React.createElement(“div”, {
+style: {
+display: “flex”,
+flexDirection: “column”,
+gap: 12
+}
+}, (pg.projekte || []).map(function (pj) {
+var _pj$bausteine5;
+var pp = calcPj(pj);
+var psc = STATUS[pj.status] || STATUS[“Offen”];
+var days = dLeft(pj.deadline);
+return /*#**PURE***/React.createElement(“div”, {
+key: pj.id,
+style: {
+background: “linear-gradient(135deg,”.concat(C.navyL, “,”).concat(C.navy, “)”),
+borderRadius: 16,
+padding: “20px 22px”,
+border: “1px solid rgba(255,255,255,0.07)”,
+position: “relative”,
+overflow: “hidden”
+}
+}, /*#**PURE***/React.createElement(“div”, {
+style: {
+position: “absolute”,
+left: 0,
+top: 0,
+bottom: 0,
+width: 3,
+background: psc.color
+}
+}), /*#**PURE***/React.createElement(“div”, {
+style: {
+paddingLeft: 14,
+display: “flex”,
+justifyContent: “space-between”,
+alignItems: “flex-start”,
+gap: 16,
+flexWrap: “wrap”
+}
+}, /*#**PURE***/React.createElement(“div”, {
+style: {
+flex: 1
+}
+}, /*#**PURE***/React.createElement(“div”, {
+style: {
+display: “flex”,
+gap: 8,
+marginBottom: 8,
+flexWrap: “wrap”,
+alignItems: “center”
+}
+}, /*#**PURE***/React.createElement(Badge, {
+status: pj.status
+}), /*#**PURE***/React.createElement(“span”, {
+style: {
+fontSize: 11,
+padding: “3px 10px”,
+borderRadius: 20,
+background: “rgba(255,255,255,0.06)”,
+color: C.gray
+}
+}, pj.category), days !== null && /*#**PURE***/React.createElement(“span”, {
+style: {
+fontSize: 11,
+color: dColor(days),
+fontWeight: 600
+}
+}, days < 0 ? “”.concat(Math.abs(days), “d \xFCber”) : “”.concat(days, “d”))), /*#**PURE***/React.createElement(“h4”, {
+onClick: function onClick() {
+return setModal(_objectSpread({}, pj));
+},
+style: {
+color: C.white,
+fontSize: 17,
+fontWeight: 800,
+margin: “0 0 5px”,
+fontFamily: “‘Syne’,sans-serif”,
+cursor: “pointer”,
+display: “inline-block”
+}
+}, pj.title), pj.description && /*#**PURE***/React.createElement(“p”, {
+style: {
+color: C.gray,
+fontSize: 12,
+margin: “0 0 12px”
+}
+}, pj.description), /*#**PURE***/React.createElement(Bar, {
+pct: pp,
+color: psc.color
+}), /*#**PURE***/React.createElement(“div”, {
+style: {
+fontSize: 11,
+color: C.gray,
+marginTop: 6
+}
+}, pp, “% \xB7 “, ((_pj$bausteine5 = pj.bausteine) === null || _pj$bausteine5 === void 0 ? void 0 : _pj$bausteine5.length) || 0, “ Bausteine \xB7 “, fDate(pj.start), “ \u2192 “, fDate(pj.deadline))), /*#**PURE***/React.createElement(PctRing, {
+pct: pp,
+size: 54,
+color: psc.color
+})), /*#**PURE***/React.createElement(“div”, {
+style: {
+display: “flex”,
+gap: 8,
+marginTop: 14,
+paddingLeft: 14
+}
+}, /*#**PURE***/React.createElement(“button”, {
+onClick: function onClick() {
+return onSelectProjekt(pj);
+},
+style: {
+background: C.red,
+color: C.white,
+border: “none”,
+borderRadius: 9,
+padding: “9px 16px”,
+fontWeight: 700,
+fontSize: 13,
+cursor: “pointer”,
+boxShadow: “0 2px 12px rgba(232,0,45,0.3)”
+}
+}, “Bausteine \u2192”), /*#**PURE***/React.createElement(“button”, {
+onClick: function onClick() {
+return setModal(_objectSpread({}, pj));
+},
+style: {
+background: “rgba(255,255,255,0.06)”,
+color: C.gray,
+border: “1px solid rgba(255,255,255,0.09)”,
+borderRadius: 9,
+padding: “9px 13px”,
+fontSize: 13,
+cursor: “pointer”
+}
+}, “\u270E”)));
+}), !((_pg$projekte4 = pg.projekte) !== null && _pg$projekte4 !== void 0 && _pg$projekte4.length) && /*#**PURE***/React.createElement(EmptyCard, {
+label: “Noch keine Projekte”,
+sub: “Erstes Projekt hinzuf\xFCgen”
+})), modal && !modal._h && /*#**PURE***/React.createElement(Modal, {
+title: modal.id ? “Projekt bearbeiten” : “Neues Projekt”,
+fields: [{
+key: “title”,
+label: “Projekttitel”,
+type: “text”
+}, {
+key: “category”,
+label: “Kategorie”,
+type: “select”,
+options: CATS
+}, {
+key: “status”,
+label: “Status”,
+type: “select”,
+options: STATUS_KEYS
+}, {
+key: “start”,
+label: “Start”,
+type: “date”
+}, {
+key: “deadline”,
+label: “Deadline”,
+type: “date”
+}, {
+key: “description”,
+label: “Beschreibung”,
+type: “text”
+}, {
+key: “notes”,
+label: “Notizen”,
+type: “text”,
+placeholder: “Interne Notizen…”
+}, {
+key: “links”,
+label: “Links”,
+type: “text”,
+placeholder: “https://…”
+}],
+initial: modal,
+onSave: savePj,
+onDelete: modal.id ? function () {
+return delPj(modal.id);
+} : null,
+onClose: function onClose() {
+return setModal(null);
+}
+}), (modal === null || modal === void 0 ? void 0 : modal._h) && /*#**PURE***/React.createElement(Modal, {
+title: “Programm bearbeiten”,
+fields: [{
+key: “title”,
+label: “Titel”,
+type: “text”
+}, {
+key: “status”,
+label: “Status”,
+type: “select”,
+options: STATUS_KEYS
+}, {
+key: “start”,
+label: “Start”,
+type: “date”
+}, {
+key: “deadline”,
+label: “Deadline”,
+type: “date”
+}, {
+key: “description”,
+label: “Beschreibung”,
+type: “text”
+}],
+initial: pg,
+onSave: function onSave(f) {
+onPgChange(_objectSpread(_objectSpread({}, pg), f));
+setModal(null);
+},
+onDelete: null,
+onClose: function onClose() {
+return setModal(null);
+}
+}));
+}
+function ProgrammeView(_ref14) {
+var programme = _ref14.programme,
+onSelect = _ref14.onSelect,
+onProgrammeChange = _ref14.onProgrammeChange;
+var _useState21 = (0, React.useState)(null),
+_useState22 = _slicedToArray(_useState21, 2),
+modal = _useState22[0],
+setModal = _useState22[1];
+var save = function save(form) {
+var list = form.id ? programme.map(function (p) {
+return p.id === form.id ? _objectSpread(_objectSpread({}, p), form) : p;
+}) : [].concat(_toConsumableArray(programme), [_objectSpread(_objectSpread({}, form), {}, {
+id: uid(),
+projekte: []
+})]);
+onProgrammeChange(list);
+setModal(null);
+};
+var del = function del(id) {
+onProgrammeChange(programme.filter(function (p) {
+return p.id !== id;
+}));
+setModal(null);
+};
+var stats = {
+total: programme.length,
+active: programme.filter(function (p) {
+return p.status === “Aktiv”;
+}).length,
+done: programme.filter(function (p) {
+return p.status === “Erledigt”;
+}).length,
+avg: programme.length ? Math.round(programme.reduce(function (s, p) {
+return s + calcPg(p);
+}, 0) / programme.length) : 0
+};
+return /*#**PURE***/React.createElement(“div”, null, /*#**PURE***/React.createElement(“div”, {
+style: {
+display: “grid”,
+gridTemplateColumns: “repeat(4,1fr)”,
+gap: 12,
+marginBottom: 26
+}
+}, [[“Programme”, stats.total, C.gray], [“Aktiv”, stats.active, C.red], [“Erledigt”, stats.done, “#22c55e”], [“Ø Fortschritt”, “”.concat(stats.avg, “%”), “#f59e0b”]].map(function (_ref15) {
+var _ref16 = _slicedToArray(_ref15, 3),
+l = _ref16[0],
+v = _ref16[1],
+col = _ref16[2];
+return /*#**PURE***/React.createElement(“div”, {
+key: l,
+style: {
+background: C.navyL,
+borderRadius: 13,
+padding: “14px 16px”,
+border: “1px solid rgba(255,255,255,0.06)”
+}
+}, /*#**PURE***/React.createElement(“div”, {
+style: {
+fontSize: 10,
+color: C.gray,
+fontWeight: 700,
+letterSpacing: 1,
+textTransform: “uppercase”,
+marginBottom: 5
+}
+}, l), /*#**PURE***/React.createElement(“div”, {
+style: {
+fontSize: 22,
+fontWeight: 800,
+color: col,
+fontFamily: “‘Syne’,sans-serif”
+}
+}, v));
+})), /*#**PURE***/React.createElement(“div”, {
+style: {
+display: “flex”,
+justifyContent: “space-between”,
+alignItems: “center”,
+marginBottom: 16
+}
+}, /*#**PURE***/React.createElement(“h3”, {
+style: {
+color: C.white,
+margin: 0,
+fontSize: 15,
+fontWeight: 700,
+fontFamily: “‘Syne’,sans-serif”
+}
+}, “Alle Programme “, /*#**PURE***/React.createElement(“span”, {
+style: {
+color: C.gray,
+fontWeight: 400
+}
+}, “(”, programme.length, “)”)), /*#**PURE***/React.createElement(“button”, {
+onClick: function onClick() {
+return setModal({
+status: “Offen”,
+title: “”,
+start: “”,
+deadline: “”,
+description: “”
+});
+},
+style: addBtnStyle()
+}, “+ Programm”)), /*#**PURE***/React.createElement(“div”, {
+style: {
+display: “flex”,
+flexDirection: “column”,
+gap: 13
+}
+}, programme.map(function (pg) {
+var _pg$projekte5, _pg$projekte6;
+var pct = calcPg(pg);
+var sc = STATUS[pg.status] || STATUS[“Offen”];
+var days = dLeft(pg.deadline);
+return /*#**PURE***/React.createElement(“div”, {
+key: pg.id,
+style: {
+background: “linear-gradient(135deg,”.concat(C.navyL, “,”).concat(C.navy, “)”),
+borderRadius: 20,
+padding: “24px 26px”,
+border: “1px solid rgba(255,255,255,0.08)”,
+position: “relative”,
+overflow: “hidden”
+}
+}, /*#**PURE***/React.createElement(“div”, {
+style: {
+position: “absolute”,
+left: 0,
+top: 0,
+bottom: 0,
+width: 4,
+background: sc.color,
+borderRadius: “20px 0 0 20px”
+}
+}), /*#**PURE***/React.createElement(“div”, {
+style: {
+paddingLeft: 18
+}
+}, /*#**PURE***/React.createElement(“div”, {
+style: {
+display: “flex”,
+justifyContent: “space-between”,
+alignItems: “flex-start”,
+gap: 16,
+flexWrap: “wrap”
+}
+}, /*#**PURE***/React.createElement(“div”, {
+style: {
+flex: 1
+}
+}, /*#**PURE***/React.createElement(“div”, {
+style: {
+display: “flex”,
+gap: 8,
+marginBottom: 10,
+flexWrap: “wrap”,
+alignItems: “center”
+}
+}, /*#**PURE***/React.createElement(Badge, {
+status: pg.status
+}), days !== null && /*#**PURE***/React.createElement(“span”, {
+style: {
+fontSize: 11,
+color: dColor(days),
+fontWeight: 700,
+background: “”.concat(dColor(days), “18”),
+padding: “3px 10px”,
+borderRadius: 20
+}
+}, days < 0 ? “”.concat(Math.abs(days), “d \xFCberf\xE4llig”) : “noch “.concat(days, “d”))), /*#**PURE***/React.createElement(“h3”, {
+onClick: function onClick() {
+return setModal(_objectSpread({}, pg));
+},
+style: {
+color: C.white,
+fontSize: 20,
+fontWeight: 800,
+margin: “0 0 5px”,
+fontFamily: “‘Syne’,sans-serif”,
+cursor: “pointer”,
+display: “inline-block”
+}
+}, pg.title), pg.description && /*#**PURE***/React.createElement(“p”, {
+style: {
+color: C.gray,
+fontSize: 13,
+margin: “0 0 8px”
+}
+}, pg.description), pg.notes && /*#**PURE***/React.createElement(“p”, {
+style: {
+color: C.gray,
+fontSize: 12,
+margin: “0 0 8px”,
+fontStyle: “italic”,
+opacity: 0.8
+}
+}, “\uD83D\uDCDD “, pg.notes), pg.links && /*#**PURE***/React.createElement(“div”, {
+style: {
+marginBottom: 8
+}
+}, pg.links.split(”,”).map(function (l, i) {
+return l.trim() && /*#**PURE***/React.createElement(“a”, {
+key: i,
+href: l.trim(),
+target: “_blank”,
+rel: “noreferrer”,
+style: {
+fontSize: 11,
+color: “#60a5fa”,
+marginRight: 8,
+textDecoration: “none”
+}
+}, “\uD83D\uDD17 “, l.trim().replace(/https?:///, “”).slice(0, 30));
+})), /*#**PURE***/React.createElement(Bar, {
+pct: pct,
+color: sc.color,
+h: 6
+}), /*#**PURE***/React.createElement(“div”, {
+style: {
+fontSize: 12,
+color: C.gray,
+marginTop: 6
+}
+}, pct, “% \xB7 “, ((_pg$projekte5 = pg.projekte) === null || _pg$projekte5 === void 0 ? void 0 : _pg$projekte5.filter(function (p) {
+return p.status === “Erledigt”;
+}).length) || 0, “/”, ((_pg$projekte6 = pg.projekte) === null || _pg$projekte6 === void 0 ? void 0 : _pg$projekte6.length) || 0, “ Projekte”)), /*#**PURE***/React.createElement(PctRing, {
+pct: pct,
+size: 66,
+color: sc.color
+})), /*#**PURE***/React.createElement(“div”, {
+style: {
+display: “flex”,
+gap: 8,
+marginTop: 16
+}
+}, /*#**PURE***/React.createElement(“button”, {
+onClick: function onClick() {
+return onSelect(pg);
+},
+style: {
+background: C.red,
+color: C.white,
+border: “none”,
+borderRadius: 9,
+padding: “10px 18px”,
+fontWeight: 700,
+fontSize: 13,
+cursor: “pointer”,
+boxShadow: “0 2px 14px rgba(232,0,45,0.3)”
+}
+}, “Projekte \u2192”), /*#**PURE***/React.createElement(“button”, {
+onClick: function onClick() {
+return setModal(_objectSpread({}, pg));
+},
+style: {
+background: “rgba(255,255,255,0.06)”,
+color: C.gray,
+border: “1px solid rgba(255,255,255,0.09)”,
+borderRadius: 9,
+padding: “10px 14px”,
+fontSize: 13,
+cursor: “pointer”
+}
+}, “\u270E”))));
+}), !programme.length && /*#**PURE***/React.createElement(EmptyCard, {
+label: “Noch keine Programme”,
+sub: “Erstes L&D Programm erstellen”
+})), modal && /*#**PURE***/React.createElement(Modal, {
+title: modal.id ? “Programm bearbeiten” : “Neues Programm”,
+fields: [{
+key: “title”,
+label: “Programmtitel”,
+type: “text”
+}, {
+key: “status”,
+label: “Status”,
+type: “select”,
+options: STATUS_KEYS
+}, {
+key: “start”,
+label: “Start”,
+type: “date”
+}, {
+key: “deadline”,
+label: “Deadline”,
+type: “date”
+}, {
+key: “description”,
+label: “Beschreibung”,
+type: “text”
+}],
+initial: modal,
+onSave: save,
+onDelete: modal.id ? function () {
+return del(modal.id);
+} : null,
+onClose: function onClose() {
+return setModal(null);
+}
+}));
+}
+
+// ─── DASHBOARD ────────────────────────────────────────────────────────────────
+function DashboardView(_ref17) {
+var programme = _ref17.programme,
+onDataChange = _ref17.onDataChange,
+onNavigate = _ref17.onNavigate;
+var today = new Date();
+today.setHours(0, 0, 0, 0);
+var weekEnd = new Date(today);
+weekEnd.setDate(weekEnd.getDate() + 7);
+
+// Collect all urgent tasks (due this week, not done)
+var urgent = [];
+var overdue = [];
+programme.forEach(function (pg) {
+(pg.projekte || []).forEach(function (pj) {
+(pj.bausteine || []).forEach(function (bs) {
+(bs.aufgaben || []).forEach(function (t) {
+if (t.status === “Erledigt”) return;
+var d = t.deadline ? new Date(t.deadline + “T00:00:00”) : null;
+var item = _objectSpread(_objectSpread({}, t), {}, {
+_pgId: pg.id,
+_pjId: pj.id,
+_bsId: bs.id,
+_pgTitle: pg.title,
+_pjTitle: pj.title,
+_bsTitle: bs.title
+});
+if (d && d < today) overdue.push(item);else if (d && d <= weekEnd) urgent.push(item);
+});
+});
+});
+});
+urgent.sort(function (a, b) {
+return new Date(a.deadline) - new Date(b.deadline);
+});
+
+// Active projects
+var activeProjects = [];
+programme.forEach(function (pg) {
+(pg.projekte || []).filter(function (p) {
+return p.status === “Aktiv”;
+}).forEach(function (pj) {
+activeProjects.push(_objectSpread(_objectSpread({}, pj), {}, {
+_pgId: pg.id,
+_pgTitle: pg.title,
+pct: calcPj(pj)
+}));
+});
+});
+
+// Stats
+var allTasks = [];
+programme.forEach(function (pg) {
+return (pg.projekte || []).forEach(function (pj) {
+return (pj.bausteine || []).forEach(function (bs) {
+return (bs.aufgaben || []).forEach(function (t) {
+return allTasks.push(t);
+});
+});
+});
+});
+var doneTasks = allTasks.filter(function (t) {
+return t.status === “Erledigt”;
+}).length;
+var totalTasks = allTasks.length;
+var activeCount = programme.filter(function (p) {
+return p.status === “Aktiv”;
+}).length;
+var overdueCount = overdue.length;
+var toggleTask = function toggleTask(item) {
+var newStatus = item.status === “Erledigt” ? “Offen” : “Aktiv”;
+var d = programme.map(function (pg) {
+if (pg.id !== item._pgId) return pg;
+return _objectSpread(_objectSpread({}, pg), {}, {
+projekte: (pg.projekte || []).map(function (pj) {
+if (pj.id !== item._pjId) return pj;
+return _objectSpread(_objectSpread({}, pj), {}, {
+bausteine: (pj.bausteine || []).map(function (bs) {
+if (bs.id !== item._bsId) return bs;
+return _objectSpread(_objectSpread({}, bs), {}, {
+aufgaben: (bs.aufgaben || []).map(function (t) {
+return t.id === item.id ? _objectSpread(_objectSpread({}, t), {}, {
+status: newStatus
+}) : t;
+})
+});
+})
+});
+})
+});
+});
+onDataChange(d);
+};
+var nowStr = new Date().toLocaleDateString(“de-DE”, {
+weekday: “long”,
+day: “2-digit”,
+month: “long”
+});
+return /*#**PURE***/React.createElement(“div”, null, /*#**PURE***/React.createElement(“div”, {
+style: {
+marginBottom: 28
+}
+}, /*#**PURE***/React.createElement(“div”, {
+style: {
+fontSize: 13,
+color: C.gray,
+marginBottom: 4
+}
+}, nowStr), /*#**PURE***/React.createElement(“h2”, {
+style: {
+color: C.white,
+fontSize: 24,
+fontWeight: 800,
+margin: 0,
+fontFamily: “‘Syne’,sans-serif”
+}
+}, “Guten Morgen, Pascal \uD83D\uDC4B”)), /*#**PURE***/React.createElement(“div”, {
+style: {
+display: “grid”,
+gridTemplateColumns: “repeat(4,1fr)”,
+gap: 12,
+marginBottom: 28
+}
+}, [[“Aktive Programme”, activeCount, C.red, “◉”], [“Aufgaben gesamt”, “”.concat(doneTasks, “/”).concat(totalTasks), “#22c55e”, “✓”], [“Diese Woche fällig”, urgent.length, “#f59e0b”, “📅”], [“Überfällig”, overdueCount, overdueCount > 0 ? C.red : C.gray, “⚠”]].map(function (_ref18) {
+var _ref19 = _slicedToArray(_ref18, 4),
+l = _ref19[0],
+v = _ref19[1],
+col = _ref19[2],
+ic = _ref19[3];
+return /*#**PURE***/React.createElement(“div”, {
+key: l,
+style: {
+background: C.navyL,
+borderRadius: 13,
+padding: “14px 16px”,
+border: “1px solid “.concat(col === C.red && l === “Überfällig” && overdueCount > 0 ? “rgba(232,0,45,0.3)” : “rgba(255,255,255,0.06)”)
+}
+}, /*#**PURE***/React.createElement(“div”, {
+style: {
+fontSize: 18,
+marginBottom: 4
+}
+}, ic), /*#**PURE***/React.createElement(“div”, {
+style: {
+fontSize: 22,
+fontWeight: 800,
+color: col,
+fontFamily: “‘Syne’,sans-serif”,
+marginBottom: 3
+}
+}, v), /*#**PURE***/React.createElement(“div”, {
+style: {
+fontSize: 10,
+color: C.gray,
+fontWeight: 600,
+letterSpacing: 0.5,
+textTransform: “uppercase”
+}
+}, l));
+})), /*#**PURE***/React.createElement(“div”, {
+style: {
+display: “grid”,
+gridTemplateColumns: “1fr 1fr”,
+gap: 18,
+marginBottom: 28
+}
+}, overdueCount > 0 && /*#**PURE***/React.createElement(“div”, {
+style: {
+gridColumn: “1/-1”,
+background: “rgba(232,0,45,0.08)”,
+borderRadius: 16,
+padding: “18px”,
+border: “1px solid rgba(232,0,45,0.2)”
+}
+}, /*#**PURE***/React.createElement(“div”, {
+style: {
+fontSize: 13,
+fontWeight: 800,
+color: C.red,
+marginBottom: 12,
+fontFamily: “‘Syne’,sans-serif”
+}
+}, “\u26A0 \xDCberf\xE4llig (”, overdueCount, “)”), /*#**PURE***/React.createElement(“div”, {
+style: {
+display: “flex”,
+flexDirection: “column”,
+gap: 7
+}
+}, overdue.map(function (it) {
+return /*#**PURE***/React.createElement(“div”, {
+key: it.id,
+style: {
+display: “flex”,
+alignItems: “center”,
+gap: 10,
+background: “rgba(0,0,0,0.2)”,
+borderRadius: 10,
+padding: “9px 12px”
+}
+}, /*#**PURE***/React.createElement(“button”, {
+onClick: function onClick() {
+return toggleTask(it);
+},
+style: {
+background: “rgba(232,0,45,0.15)”,
+border: “none”,
+borderRadius: “50%”,
+width: 26,
+height: 26,
+color: C.red,
+fontSize: 12,
+cursor: “pointer”,
+flexShrink: 0
+}
+}, “\u25CB”), /*#**PURE***/React.createElement(“div”, {
+style: {
+flex: 1,
+minWidth: 0
+}
+}, /*#**PURE***/React.createElement(“div”, {
+style: {
+color: C.white,
+fontSize: 13,
+fontWeight: 600,
+overflow: “hidden”,
+textOverflow: “ellipsis”,
+whiteSpace: “nowrap”
+}
+}, it.title), /*#**PURE***/React.createElement(“div”, {
+style: {
+fontSize: 10,
+color: C.gray
+}
+}, it._pgTitle, “ \u203A “, it._pjTitle, “ \u203A “, it._bsTitle)), /*#**PURE***/React.createElement(“span”, {
+style: {
+fontSize: 11,
+color: C.red,
+fontWeight: 700,
+flexShrink: 0
+}
+}, fDate(it.deadline)));
+}))), /*#**PURE***/React.createElement(“div”, {
+style: {
+background: C.navyL,
+borderRadius: 16,
+padding: “18px”,
+border: “1px solid rgba(255,255,255,0.07)”
+}
+}, /*#**PURE***/React.createElement(“div”, {
+style: {
+fontSize: 13,
+fontWeight: 800,
+color: C.white,
+marginBottom: 12,
+fontFamily: “‘Syne’,sans-serif”
+}
+}, “\uD83D\uDCC5 Diese Woche f\xE4llig”), urgent.length === 0 ? /*#**PURE***/React.createElement(“div”, {
+style: {
+color: C.gray,
+fontSize: 13,
+padding: “16px 0”,
+textAlign: “center”
+}
+}, “Nichts f\xE4llig diese Woche \uD83C\uDF89”) : /*#**PURE***/React.createElement(“div”, {
+style: {
+display: “flex”,
+flexDirection: “column”,
+gap: 7
+}
+}, urgent.slice(0, 6).map(function (it) {
+var _STATUS$it$status, _STATUS$it$status2, _STATUS$it$status3;
+var days = dLeft(it.deadline);
+return /*#**PURE***/React.createElement(“div”, {
+key: it.id,
+style: {
+display: “flex”,
+alignItems: “center”,
+gap: 10,
+background: “rgba(0,0,0,0.15)”,
+borderRadius: 10,
+padding: “9px 12px”,
+cursor: “pointer”,
+transition: “background 0.15s”
+},
+onMouseEnter: function onMouseEnter(e) {
+return e.currentTarget.style.background = “rgba(255,255,255,0.05)”;
+},
+onMouseLeave: function onMouseLeave(e) {
+return e.currentTarget.style.background = “rgba(0,0,0,0.15)”;
+}
+}, /*#**PURE***/React.createElement(“button”, {
+onClick: function onClick() {
+return toggleTask(it);
+},
+style: {
+background: (_STATUS$it$status = STATUS[it.status]) === null || _STATUS$it$status === void 0 ? void 0 : _STATUS$it$status.bg,
+border: “none”,
+borderRadius: “50%”,
+width: 26,
+height: 26,
+color: (_STATUS$it$status2 = STATUS[it.status]) === null || _STATUS$it$status2 === void 0 ? void 0 : _STATUS$it$status2.color,
+fontSize: 12,
+cursor: “pointer”,
+flexShrink: 0
+}
+}, ((_STATUS$it$status3 = STATUS[it.status]) === null || _STATUS$it$status3 === void 0 ? void 0 : _STATUS$it$status3.icon) || “○”), /*#**PURE***/React.createElement(“div”, {
+style: {
+flex: 1,
+minWidth: 0
+}
+}, /*#**PURE***/React.createElement(“div”, {
+style: {
+color: C.white,
+fontSize: 13,
+fontWeight: 600,
+overflow: “hidden”,
+textOverflow: “ellipsis”,
+whiteSpace: “nowrap”
+}
+}, it.title), /*#**PURE***/React.createElement(“div”, {
+style: {
+fontSize: 10,
+color: C.gray
+}
+}, it._bsTitle)), /*#**PURE***/React.createElement(“span”, {
+style: {
+fontSize: 11,
+color: dColor(days),
+fontWeight: 700,
+flexShrink: 0
+}
+}, days === 0 ? “Heute” : days === 1 ? “Morgen” : “”.concat(days, “d”)));
+}), urgent.length > 6 && /*#**PURE***/React.createElement(“div”, {
+style: {
+fontSize: 11,
+color: C.gray,
+textAlign: “center”,
+paddingTop: 4
+}
+}, “+”, urgent.length - 6, “ weitere \u2192 Planung”))), /*#**PURE***/React.createElement(“div”, {
+style: {
+background: C.navyL,
+borderRadius: 16,
+padding: “18px”,
+border: “1px solid rgba(255,255,255,0.07)”
+}
+}, /*#**PURE***/React.createElement(“div”, {
+style: {
+fontSize: 13,
+fontWeight: 800,
+color: C.white,
+marginBottom: 12,
+fontFamily: “‘Syne’,sans-serif”
+}
+}, “\u25C9 Aktive Projekte”), activeProjects.length === 0 ? /*#**PURE***/React.createElement(“div”, {
+style: {
+color: C.gray,
+fontSize: 13,
+padding: “16px 0”,
+textAlign: “center”
+}
+}, “Keine aktiven Projekte”) : /*#**PURE***/React.createElement(“div”, {
+style: {
+display: “flex”,
+flexDirection: “column”,
+gap: 10
+}
+}, activeProjects.slice(0, 5).map(function (pj) {
+var sc = STATUS[pj.status] || STATUS[“Offen”];
+var days = dLeft(pj.deadline);
+return /*#**PURE***/React.createElement(“div”, {
+key: pj.id,
+onClick: function onClick() {
+return onNavigate(pj._pgId, pj.id, null);
+},
+style: {
+cursor: “pointer”,
+padding: “2px 0”
+}
+}, /*#**PURE***/React.createElement(“div”, {
+style: {
+display: “flex”,
+justifyContent: “space-between”,
+marginBottom: 5
+}
+}, /*#**PURE***/React.createElement(“span”, {
+style: {
+fontSize: 13,
+color: C.white,
+fontWeight: 600,
+overflow: “hidden”,
+textOverflow: “ellipsis”,
+whiteSpace: “nowrap”,
+flex: 1,
+paddingRight: 8
+}
+}, pj.title), /*#**PURE***/React.createElement(“span”, {
+style: {
+fontSize: 11,
+color: dColor(days),
+fontWeight: 700,
+flexShrink: 0
+}
+}, pj.pct, “%”)), /*#**PURE***/React.createElement(Bar, {
+pct: pj.pct,
+color: sc.color,
+h: 5
+}), /*#**PURE***/React.createElement(“div”, {
+style: {
+fontSize: 10,
+color: C.gray,
+marginTop: 3
+}
+}, pj._pgTitle, “ \xB7 “, fDate(pj.deadline)));
+})))));
+}
+
+// ─── REPORT VIEW ──────────────────────────────────────────────────────────────
+function ReportView(_ref20) {
+var programme = _ref20.programme;
+var _useState23 = (0, React.useState)(false),
+_useState24 = _slicedToArray(_useState23, 2),
+copied = _useState24[0],
+setCopied = _useState24[1];
+var today = new Date().toLocaleDateString(“de-DE”, {
+day: “2-digit”,
+month: “long”,
+year: “numeric”
+});
+var buildText = function buildText() {
+var lines = [];
+lines.push(”\uD83D\uDCCA L&D Status-Report \u2013 zipmend Academy”);
+lines.push(“Stand: “.concat(today));
+lines.push(””.concat(“─”.repeat(40)));
+programme.forEach(function (pg) {
+var pct = calcPg(pg);
+lines.push(”\n\uD83D\uDDC2 “.concat(pg.title, “ [”).concat(pg.status, “] \u2013 “).concat(pct, “%”));
+if (pg.description) lines.push(”   “.concat(pg.description));
+(pg.projekte || []).forEach(function (pj) {
+var ppct = calcPj(pj);
+lines.push(”  \uD83D\uDCC1 “.concat(pj.title, “ [”).concat(pj.status, “] \u2013 “).concat(ppct, “% \xB7 bis “).concat(fDate(pj.deadline)));
+(pj.bausteine || []).forEach(function (bs) {
+var _bs$aufgaben7, _bs$aufgaben8;
+var bpct = calcB(bs);
+var done = ((_bs$aufgaben7 = bs.aufgaben) === null || _bs$aufgaben7 === void 0 ? void 0 : _bs$aufgaben7.filter(function (a) {
+return a.status === “Erledigt”;
+}).length) || 0;
+var total = ((_bs$aufgaben8 = bs.aufgaben) === null || _bs$aufgaben8 === void 0 ? void 0 : _bs$aufgaben8.length) || 0;
+lines.push(”     \uD83D\uDCE6 “.concat(bs.title, “ [”).concat(bs.status, “] \u2013 “).concat(bpct, “% (”).concat(done, “/”).concat(total, “ Aufgaben)”));
+});
+});
+});
+lines.push(”\n”.concat(“─”.repeat(40)));
+lines.push(“Erstellt mit zipmend L&D Cockpit”);
+return lines.join(”\n”);
+};
+var copyToClipboard = function copyToClipboard() {
+navigator.clipboard.writeText(buildText()).then(function () {
+setCopied(true);
+setTimeout(function () {
+return setCopied(false);
+}, 2000);
+});
+};
+return /*#**PURE***/React.createElement(“div”, null, /*#**PURE***/React.createElement(“div”, {
+style: {
+display: “flex”,
+justifyContent: “space-between”,
+alignItems: “center”,
+marginBottom: 20,
+flexWrap: “wrap”,
+gap: 12
+}
+}, /*#**PURE***/React.createElement(“div”, null, /*#**PURE***/React.createElement(“h2”, {
+style: {
+color: C.white,
+fontSize: 20,
+fontWeight: 800,
+margin: 0,
+fontFamily: “‘Syne’,sans-serif”
+}
+}, “Status-Report”), /*#**PURE***/React.createElement(“div”, {
+style: {
+color: C.gray,
+fontSize: 12,
+marginTop: 3
+}
+}, “Stand: “, today)), /*#**PURE***/React.createElement(“button”, {
+onClick: copyToClipboard,
+style: {
+background: copied ? “#22c55e” : C.red,
+color: C.white,
+border: “none”,
+borderRadius: 10,
+padding: “10px 18px”,
+fontWeight: 700,
+fontSize: 13,
+cursor: “pointer”,
+transition: “background 0.3s”,
+boxShadow: “0 2px 14px rgba(232,0,45,0.28)”
+}
+}, copied ? “✓ Kopiert!” : “📋 In Zwischenablage”)), /*#**PURE***/React.createElement(“div”, {
+style: {
+display: “flex”,
+flexDirection: “column”,
+gap: 14
+}
+}, programme.map(function (pg) {
+var _pg$projekte7, _pg$projekte8;
+var pct = calcPg(pg);
+var sc = STATUS[pg.status] || STATUS[“Offen”];
+var days = dLeft(pg.deadline);
+var totalTasks = ((_pg$projekte7 = pg.projekte) === null || _pg$projekte7 === void 0 ? void 0 : _pg$projekte7.flatMap(function (pj) {
+var _pj$bausteine6;
+return ((_pj$bausteine6 = pj.bausteine) === null || _pj$bausteine6 === void 0 ? void 0 : _pj$bausteine6.flatMap(function (bs) {
+return bs.aufgaben || [];
+})) || [];
+}).length) || 0;
+var doneTasks = ((_pg$projekte8 = pg.projekte) === null || _pg$projekte8 === void 0 ? void 0 : _pg$projekte8.flatMap(function (pj) {
+var _pj$bausteine7;
+return ((_pj$bausteine7 = pj.bausteine) === null || _pj$bausteine7 === void 0 ? void 0 : _pj$bausteine7.flatMap(function (bs) {
+var _bs$aufgaben9;
+return ((_bs$aufgaben9 = bs.aufgaben) === null || _bs$aufgaben9 === void 0 ? void 0 : _bs$aufgaben9.filter(function (a) {
+return a.status === “Erledigt”;
+})) || [];
+})) || [];
+}).length) || 0;
+return /*#**PURE***/React.createElement(“div”, {
+key: pg.id,
+style: {
+background: C.navyL,
+borderRadius: 18,
+padding: “22px”,
+border: “1px solid rgba(255,255,255,0.07)”,
+position: “relative”,
+overflow: “hidden”
+}
+}, /*#**PURE***/React.createElement(“div”, {
+style: {
+position: “absolute”,
+left: 0,
+top: 0,
+bottom: 0,
+width: 4,
+background: sc.color
+}
+}), /*#**PURE***/React.createElement(“div”, {
+style: {
+paddingLeft: 16
+}
+}, /*#**PURE***/React.createElement(“div”, {
+style: {
+display: “flex”,
+justifyContent: “space-between”,
+alignItems: “flex-start”,
+flexWrap: “wrap”,
+gap: 12,
+marginBottom: 14
+}
+}, /*#**PURE***/React.createElement(“div”, null, /*#**PURE***/React.createElement(“div”, {
+style: {
+display: “flex”,
+gap: 8,
+marginBottom: 8,
+flexWrap: “wrap”,
+alignItems: “center”
+}
+}, /*#**PURE***/React.createElement(Badge, {
+status: pg.status
+}), days !== null && /*#**PURE***/React.createElement(“span”, {
+style: {
+fontSize: 11,
+color: dColor(days),
+fontWeight: 700
+}
+}, days < 0 ? “”.concat(Math.abs(days), “d \xFCberf\xE4llig”) : “noch “.concat(days, “d”))), /*#**PURE***/React.createElement(“h3”, {
+style: {
+color: C.white,
+fontSize: 18,
+fontWeight: 800,
+margin: 0,
+fontFamily: “‘Syne’,sans-serif”
+}
+}, pg.title), pg.description && /*#**PURE***/React.createElement(“p”, {
+style: {
+color: C.gray,
+fontSize: 12,
+margin: “4px 0 0”
+}
+}, pg.description)), /*#**PURE***/React.createElement(“div”, {
+style: {
+textAlign: “right”
+}
+}, /*#**PURE***/React.createElement(“div”, {
+style: {
+fontSize: 28,
+fontWeight: 800,
+color: sc.color,
+fontFamily: “‘Syne’,sans-serif”
+}
+}, pct, “%”), /*#**PURE***/React.createElement(“div”, {
+style: {
+fontSize: 11,
+color: C.gray
+}
+}, doneTasks, “/”, totalTasks, “ Aufgaben”))), /*#**PURE***/React.createElement(Bar, {
+pct: pct,
+color: sc.color,
+h: 6
+}), /*#**PURE***/React.createElement(“div”, {
+style: {
+marginTop: 16,
+display: “flex”,
+flexDirection: “column”,
+gap: 10
+}
+}, (pg.projekte || []).map(function (pj) {
+var _pj$bausteine8, _pj$bausteine9;
+var ppct = calcPj(pj);
+var psc = STATUS[pj.status] || STATUS[“Offen”];
+var pdays = dLeft(pj.deadline);
+var pdone = ((_pj$bausteine8 = pj.bausteine) === null || _pj$bausteine8 === void 0 ? void 0 : _pj$bausteine8.flatMap(function (bs) {
+var _bs$aufgaben0;
+return ((_bs$aufgaben0 = bs.aufgaben) === null || _bs$aufgaben0 === void 0 ? void 0 : _bs$aufgaben0.filter(function (a) {
+return a.status === “Erledigt”;
+})) || [];
+}).length) || 0;
+var ptotal = ((_pj$bausteine9 = pj.bausteine) === null || _pj$bausteine9 === void 0 ? void 0 : _pj$bausteine9.flatMap(function (bs) {
+return bs.aufgaben || [];
+}).length) || 0;
+return /*#**PURE***/React.createElement(“div”, {
+key: pj.id,
+style: {
+background: “rgba(0,0,0,0.15)”,
+borderRadius: 12,
+padding: “12px 14px”
+}
+}, /*#**PURE***/React.createElement(“div”, {
+style: {
+display: “flex”,
+justifyContent: “space-between”,
+alignItems: “center”,
+marginBottom: 8,
+flexWrap: “wrap”,
+gap: 8
+}
+}, /*#**PURE***/React.createElement(“div”, {
+style: {
+display: “flex”,
+gap: 8,
+alignItems: “center”,
+flexWrap: “wrap”
+}
+}, /*#**PURE***/React.createElement(Badge, {
+status: pj.status
+}), /*#**PURE***/React.createElement(“span”, {
+style: {
+color: C.white,
+fontSize: 14,
+fontWeight: 700
+}
+}, pj.title), /*#**PURE***/React.createElement(“span”, {
+style: {
+fontSize: 11,
+color: C.gray
+}
+}, pj.category)), /*#**PURE***/React.createElement(“div”, {
+style: {
+display: “flex”,
+gap: 12,
+alignItems: “center”
+}
+}, /*#**PURE***/React.createElement(“span”, {
+style: {
+fontSize: 12,
+color: C.gray
+}
+}, pdone, “/”, ptotal, “ Aufgaben”), /*#**PURE***/React.createElement(“span”, {
+style: {
+fontSize: 12,
+color: dColor(pdays),
+fontWeight: 700
+}
+}, “bis “, fDate(pj.deadline)), /*#**PURE***/React.createElement(“span”, {
+style: {
+fontSize: 14,
+fontWeight: 800,
+color: psc.color
+}
+}, ppct, “%”))), /*#**PURE***/React.createElement(Bar, {
+pct: ppct,
+color: psc.color,
+h: 4
+}), /*#**PURE***/React.createElement(“div”, {
+style: {
+display: “flex”,
+gap: 8,
+marginTop: 10,
+flexWrap: “wrap”
+}
+}, (pj.bausteine || []).map(function (bs) {
+var bsc = STATUS[bs.status] || STATUS[“Offen”];
+var bpct = calcB(bs);
+return /*#**PURE***/React.createElement(“div”, {
+key: bs.id,
+style: {
+fontSize: 11,
+background: “”.concat(bsc.color, “18”),
+color: bsc.color,
+padding: “3px 10px”,
+borderRadius: 20,
+fontWeight: 600
+}
+}, bs.title, “ “, bpct, “%”);
+})));
+}))));
+})));
+}
+
+// ─── APP ──────────────────────────────────────────────────────────────────────
+var TABS = [{
+id: “dashboard”,
+label: “🏠 Dashboard”
+}, {
+id: “cockpit”,
+label: “📋 Cockpit”
+}, {
+id: “planung”,
+label: “📅 Planung”
+}, {
+id: “report”,
+label: “📊 Report”
+}];
+function App() {
+var _livePg$projekte, _livePj$bausteine;
+var _useState25 = (0, React.useState)(null),
+_useState26 = _slicedToArray(_useState25, 2),
+data = _useState26[0],
+setData = _useState26[1];
+var _useState27 = (0, React.useState)(“dashboard”),
+_useState28 = _slicedToArray(_useState27, 2),
+tab = _useState28[0],
+setTab = _useState28[1];
+var _useState29 = (0, React.useState)(“root”),
+_useState30 = _slicedToArray(_useState29, 2),
+view = _useState30[0],
+setView = _useState30[1];
+var _useState31 = (0, React.useState)(null),
+_useState32 = _slicedToArray(_useState31, 2),
+selPg = _useState32[0],
+setSelPg = _useState32[1];
+var _useState33 = (0, React.useState)(null),
+_useState34 = _slicedToArray(_useState33, 2),
+selPj = _useState34[0],
+setSelPj = _useState34[1];
+var _useState35 = (0, React.useState)(null),
+_useState36 = _slicedToArray(_useState35, 2),
+selBs = _useState36[0],
+setSelBs = _useState36[1];
+var _useState37 = (0, React.useState)(false),
+_useState38 = _slicedToArray(_useState37, 2),
+ready = _useState38[0],
+setReady = _useState38[1];
+var _useState39 = (0, React.useState)(false),
+_useState40 = _slicedToArray(_useState39, 2),
+isMobile = _useState40[0],
+setIsMobile = _useState40[1];
+var _useState41 = (0, React.useState)(””),
+_useState42 = _slicedToArray(_useState41, 2),
+importMsg = _useState42[0],
+setImportMsg = _useState42[1];
+var handleExport = function handleExport() {
+var json = JSON.stringify(data, null, 2);
+var blob = new Blob([json], {
+type: “application/json”
+});
+var url = URL.createObjectURL(blob);
+var a = document.createElement(“a”);
+a.href = url;
+a.download = “ld-cockpit-”.concat(new Date().toISOString().slice(0, 10), “.json”);
+a.click();
+URL.revokeObjectURL(url);
+};
+var handleImport = function handleImport(e) {
+var _e$target$files;
+var file = (_e$target$files = e.target.files) === null || _e$target$files === void 0 ? void 0 : _e$target$files[0];
+if (!file) return;
+var reader = new FileReader();
+reader.onload = function (ev) {
+try {
+var parsed = JSON.parse(ev.target.result);
+if (!Array.isArray(parsed)) throw new Error(“Ungültiges Format”);
+setProgramme(parsed);
+setImportMsg(“✓ Importiert!”);
+setTimeout(function () {
+return setImportMsg(””);
+}, 3000);
+} catch (_unused) {
+setImportMsg(“⚠ Fehler beim Import”);
+setTimeout(function () {
+return setImportMsg(””);
+}, 3000);
+}
+};
+reader.readAsText(file);
+e.target.value = “”;
+};
+(0, React.useEffect)(function () {
+var check = function check() {
+return setIsMobile(window.innerWidth < 700);
+};
+check();
+window.addEventListener(“resize”, check);
+return function () {
+return window.removeEventListener(“resize”, check);
+};
+}, []);
+(0, React.useEffect)(function () {
+_asyncToGenerator(/*#**PURE***/_regenerator().m(function _callee() {
+var r, _t;
+return _regenerator().w(function (_context) {
+while (1) switch (_context.p = _context.n) {
+case 0:
+_context.p = 0;
+_context.n = 1;
+return window.storage.get(“ld-v5”);
+case 1:
+r = _context.v;
+setData(r !== null && r !== void 0 && r.value ? JSON.parse(r.value) : SEED);
+_context.n = 3;
+break;
+case 2:
+_context.p = 2;
+_t = _context.v;
+setData(SEED);
+case 3:
+setReady(true);
+case 4:
+return _context.a(2);
+}
+}, _callee, null, [[0, 2]]);
+}))();
+}, []);
+var persist = (0, React.useCallback)(/*#**PURE***/function () {
+var _ref22 = _asyncToGenerator(/*#**PURE***/_regenerator().m(function _callee2(d) {
+var _t2;
+return _regenerator().w(function (_context2) {
+while (1) switch (_context2.p = _context2.n) {
+case 0:
+_context2.p = 0;
+_context2.n = 1;
+return window.storage.set(“ld-v5”, JSON.stringify(d));
+case 1:
+_context2.n = 3;
+break;
+case 2:
+_context2.p = 2;
+_t2 = _context2.v;
+case 3:
+return _context2.a(2);
+}
+}, _callee2, null, [[0, 2]]);
+}));
+return function (_x) {
+return _ref22.apply(this, arguments);
+};
+}(), []);
+var setProgramme = function setProgramme(d) {
+setData(d);
+persist(d);
+};
+var updatePg = function updatePg(updated) {
+var d = data.map(function (p) {
+return p.id === updated.id ? updated : p;
+});
+setData(d);
+persist(d);
+setSelPg(updated);
+};
+var updatePj = function updatePj(updatedPj) {
+var upg = _objectSpread(_objectSpread({}, selPg), {}, {
+projekte: selPg.projekte.map(function (p) {
+return p.id === updatedPj.id ? updatedPj : p;
+})
+});
+updatePg(upg);
+setSelPj(updatedPj);
+};
+var updateBs = function updateBs(updatedBs) {
+var upj = _objectSpread(_objectSpread({}, selPj), {}, {
+bausteine: selPj.bausteine.map(function (b) {
+return b.id === updatedBs.id ? updatedBs : b;
+})
+});
+updatePj(upj);
+setSelBs(updatedBs);
+};
+var livePg = (data === null || data === void 0 ? void 0 : data.find(function (p) {
+return p.id === (selPg === null || selPg === void 0 ? void 0 : selPg.id);
+})) || selPg;
+var livePj = (livePg === null || livePg === void 0 || (_livePg$projekte = livePg.projekte) === null || _livePg$projekte === void 0 ? void 0 : _livePg$projekte.find(function (p) {
+return p.id === (selPj === null || selPj === void 0 ? void 0 : selPj.id);
+})) || selPj;
+var liveBs = (livePj === null || livePj === void 0 || (_livePj$bausteine = livePj.bausteine) === null || _livePj$bausteine === void 0 ? void 0 : _livePj$bausteine.find(function (b) {
+return b.id === (selBs === null || selBs === void 0 ? void 0 : selBs.id);
+})) || selBs;
+var nav = function nav(target) {
+if (target === “root”) {
+setView(“root”);
+setSelPg(null);
+setSelPj(null);
+setSelBs(null);
+}
+if (target === “pg”) {
+setView(“pg”);
+setSelPj(null);
+setSelBs(null);
+}
+if (target === “pj”) {
+setView(“pj”);
+setSelBs(null);
+}
+};
+if (!ready) return /*#**PURE***/React.createElement(“div”, {
+style: {
+minHeight: “100vh”,
+background: C.navyD,
+display: “flex”,
+alignItems: “center”,
+justifyContent: “center”,
+color: C.gray,
+fontFamily: “‘DM Sans’,sans-serif”
+}
+}, “Lade\u2026”);
+return /*#**PURE***/React.createElement(“div”, {
+style: {
+minHeight: “100vh”,
+background: C.navyD,
+fontFamily: “‘DM Sans’,sans-serif”,
+padding: “20px 16px”
+}
+}, /*#**PURE***/React.createElement(“link”, {
+href: “https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap”,
+rel: “stylesheet”
+}), /*#**PURE***/React.createElement(“div”, {
+style: {
+maxWidth: 920,
+margin: “0 auto”
+}
+}, /*#**PURE***/React.createElement(“div”, {
+style: {
+display: “flex”,
+alignItems: “center”,
+justifyContent: “space-between”,
+marginBottom: 24,
+flexWrap: “wrap”,
+gap: 12
+}
+}, /*#**PURE***/React.createElement(“div”, {
+style: {
+display: “flex”,
+alignItems: “center”,
+gap: 12
+}
+}, /*#**PURE***/React.createElement(“div”, {
+style: {
+width: 5,
+height: 34,
+background: C.red,
+borderRadius: 3
+}
+}), /*#**PURE***/React.createElement(“div”, null, /*#**PURE***/React.createElement(“h1”, {
+style: {
+color: C.white,
+fontSize: 22,
+fontWeight: 800,
+margin: 0,
+fontFamily: “‘Syne’,sans-serif”
+}
+}, “L&D Cockpit”), /*#**PURE***/React.createElement(“p”, {
+style: {
+color: C.gray,
+margin: 0,
+fontSize: 10
+}
+}, “zipmend Academy”))), /*#**PURE***/React.createElement(“div”, {
+style: {
+display: “flex”,
+alignItems: “center”,
+gap: 8,
+flexWrap: “wrap”
+}
+}, /*#**PURE***/React.createElement(“button”, {
+onClick: handleExport,
+title: “Daten exportieren”,
+style: {
+background: “rgba(255,255,255,0.07)”,
+color: C.gray,
+border: “1px solid rgba(255,255,255,0.1)”,
+borderRadius: 9,
+padding: “7px 13px”,
+fontSize: 12,
+fontWeight: 600,
+cursor: “pointer”,
+fontFamily: “‘DM Sans’,sans-serif”
+}
+}, “\u2B07 Export”), /*#**PURE***/React.createElement(“label”, {
+title: “Daten importieren”,
+style: {
+background: “rgba(255,255,255,0.07)”,
+color: C.gray,
+border: “1px solid rgba(255,255,255,0.1)”,
+borderRadius: 9,
+padding: “7px 13px”,
+fontSize: 12,
+fontWeight: 600,
+cursor: “pointer”,
+fontFamily: “‘DM Sans’,sans-serif”
+}
+}, “\u2B06 Import”, /*#**PURE***/React.createElement(“input”, {
+type: “file”,
+accept: “.json”,
+onChange: handleImport,
+style: {
+display: “none”
+}
+})), importMsg && /*#**PURE***/React.createElement(“span”, {
+style: {
+fontSize: 11,
+color: “#22c55e”,
+fontWeight: 700
+}
+}, importMsg), /*#**PURE***/React.createElement(“div”, {
+style: {
+display: “flex”,
+gap: 4,
+background: “rgba(255,255,255,0.05)”,
+borderRadius: 12,
+padding: 3
+}
+}, TABS.map(function (t) {
+return /*#**PURE***/React.createElement(“button”, {
+key: t.id,
+onClick: function onClick() {
+return setTab(t.id);
+},
+style: {
+padding: “8px 16px”,
+borderRadius: 9,
+fontSize: 12,
+fontWeight: 700,
+cursor: “pointer”,
+border: “none”,
+background: tab === t.id ? C.navyLL : “transparent”,
+color: tab === t.id ? C.white : C.gray,
+fontFamily: “‘DM Sans’,sans-serif”
+}
+}, t.label);
+})))), tab === “dashboard” && /*#**PURE***/React.createElement(DashboardView, {
+programme: data,
+onDataChange: setProgramme,
+onNavigate: function onNavigate(pgId, pjId, bsId) {
+var pg = data.find(function (p) {
+return p.id === pgId;
+});
+if (pg) {
+setSelPg(pg);
+setTab(“cockpit”);
+if (pjId) {
+var _pg$projekte9;
+var pj = (_pg$projekte9 = pg.projekte) === null || _pg$projekte9 === void 0 ? void 0 : _pg$projekte9.find(function (p) {
+return p.id === pjId;
+});
+if (pj) {
+setSelPj(pj);
+setView(“pj”);
+if (bsId) {
+var _pj$bausteine0;
+var bs = (_pj$bausteine0 = pj.bausteine) === null || _pj$bausteine0 === void 0 ? void 0 : _pj$bausteine0.find(function (b) {
+return b.id === bsId;
+});
+if (bs) {
+setSelBs(bs);
+setView(“bs”);
+}
+}
+} else setView(“pg”);
+} else setView(“pg”);
+}
+}
+}), tab === “report” && /*#**PURE***/React.createElement(ReportView, {
+programme: data
+}), tab === “planung” && /*#**PURE***/React.createElement(“div”, null, /*#**PURE***/React.createElement(GanttView, {
+programme: data,
+onDataChange: setProgramme,
+isMobile: isMobile
+}), /*#**PURE***/React.createElement(“div”, {
+style: {
+marginTop: 28
+}
+}, /*#**PURE***/React.createElement(WeeklyView, {
+programme: data,
+onDataChange: setProgramme
+}))), tab === “cockpit” && /*#**PURE***/React.createElement(React.Fragment, null, view === “root” && /*#**PURE***/React.createElement(ProgrammeView, {
+programme: data,
+onSelect: function onSelect(pg) {
+setSelPg(pg);
+setView(“pg”);
+},
+onProgrammeChange: setProgramme
+}), view === “pg” && livePg && /*#**PURE***/React.createElement(ProjekteView, {
+pg: livePg,
+onSelectProjekt: function onSelectProjekt(pj) {
+setSelPj(pj);
+setView(“pj”);
+},
+onPgChange: updatePg,
+onBack: nav
+}), view === “pj” && livePg && livePj && /*#**PURE***/React.createElement(BausteineView, {
+pg: livePg,
+pj: livePj,
+onSelectBaustein: function onSelectBaustein(bs) {
+setSelBs(bs);
+setView(“bs”);
+},
+onPjChange: updatePj,
+onBack: nav
+}), view === “bs” && livePg && livePj && liveBs && /*#**PURE***/React.createElement(AufgabenView, {
+pg: livePg,
+pj: livePj,
+bs: liveBs,
+onChange: updateBs,
+onBack: nav
+})), /*#**PURE***/React.createElement(“div”, {
+style: {
+marginTop: 32,
+textAlign: “center”,
+color: “rgba(122,133,163,0.25)”,
+fontSize: 10
+}
+}, “zipmend Academy \xB7 L&D Cockpit v5 \xB7 “, new Date().toLocaleDateString(“de-DE”))));
+}
+
+```
+var root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(React.createElement(App, null));
+```
+
+  </script>
+</body>
+</html>
